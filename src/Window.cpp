@@ -1,0 +1,57 @@
+#include "orepch.h"
+#include "Window.h"
+
+namespace ORE {
+	Window::~Window() {
+		if (!init) return;
+		glfwDestroyWindow(window);
+		glfwTerminate();
+	}
+
+	void Window::Create(const char* name, glm::vec2 size, bool fullscreen, bool windowed) {
+		if (!init)
+			if (!glfwInit()) {
+				std::cout << "Failed to init GLFW!" << std::endl;
+				assert(true);
+				return;
+			}
+		
+		if (fullscreen && windowed) {
+			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+			const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+			glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+			glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+			glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+			glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
+			window = glfwCreateWindow(mode->width, mode->height, name, monitor, NULL);
+			if (window == nullptr) {
+				std::cout << "Failed to create GLFW window" << std::endl;
+				assert(true);
+				return;
+			}
+			
+			glfwMakeContextCurrent(window);
+			return;
+		}
+
+		window = glfwCreateWindow(size.x, size.y, name, fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
+		if (window == nullptr) {
+			std::cout << "Failed to create GLFW window" << std::endl;
+			assert(true);
+			return;
+		}
+		
+		glfwMakeContextCurrent(window);
+	}
+
+	bool Window::ShouldClose() {
+		return glfwWindowShouldClose(window);
+	}
+
+	void Window::Poll() {
+		glfwPollEvents();
+		glfwSwapBuffers(window);
+	}
+}
