@@ -2,6 +2,7 @@
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
+#include "stb_image.h"
 
 namespace ORE {
 	// Wrapper for making windows with GLFW
@@ -20,6 +21,8 @@ namespace ORE {
 		void ClearColor(float r, float g, float b, float a);
 		void Poll();
 		void SetSizeCallback(GLFWwindowsizefun callback) { glfwSetWindowSizeCallback(window, callback); }
+
+		void SetCursor(std::string_view cursorPath, int xhot, int yhot);
 
 		operator GLFWwindow* () const {
 			return window;

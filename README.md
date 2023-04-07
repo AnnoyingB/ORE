@@ -2,7 +2,7 @@
 OpenGL Rendering Engine
 
 ## ORE::Window
-Creates a window using GLFW using the `Create()` function. Use `ShouldClose()` in a while loop to check if it is finished. To initialize OpenGL use `InitGlad()`. To clear the window use `ClearColor()`. If you would like to change the viewport size, use the `SetSizeCallback()` function. To handle all the events use the `Poll()` function.
+Creates a window using GLFW using the `Create()` function. Use `ShouldClose()` in a while loop to check if it is finished. To initialize OpenGL use `InitGlad()`. To clear the window use `ClearColor()`. If you would like to change the viewport size, use the `SetSizeCallback()` function. To handle all the events use the `Poll()` function. If you want your own cursor, call `SetCursor()`. `xhot` is the point where you can click buttons, links etc.
 
 Here is a simple setup using the window (from the `main.cpp` file):
 ```c++
@@ -50,3 +50,6 @@ In the constructor you give it a path to the file without the extension. It will
 
 ## ORE::Mesh
 A mesh creates all the buffers and shaders required to render onto the screen and with the `+` operator you can merge 2 meshes together for performence. The first mesh will be the merged mesh and the second mesh is the same. You can get the VBO and IBO with the `GetXXX()` function or `GetConstXXX()` function. Both do the same thing but the const function is read only.
+
+###### this is a work in progress
+###### i'm sorry if you don't understand the docs :c

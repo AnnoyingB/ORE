@@ -69,4 +69,24 @@ namespace ORE {
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
+	void Window::SetCursor(std::string_view cursorPath, int xhot, int yhot)
+	{
+		int width, height, numComponents;
+		unsigned char* imageData = stbi_load(cursorPath.data(), &width, &height, &numComponents, 4);
+
+		if (imageData == NULL) {
+			std::cout << "Failed to load image for cursor" << std::endl;
+			return;
+		}
+
+		GLFWimage* image;
+		image->width = width;
+		image->height = height;
+		image->pixels = imageData;
+
+		stbi_image_free(imageData);
+
+		GLFWcursor* cursor = glfwCreateCursor(image, xhot, yhot);
+		glfwSetCursor(window, cursor);
+	}
 }
