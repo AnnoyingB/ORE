@@ -8,12 +8,12 @@ namespace ORE {
 		glfwTerminate();
 	}
 
-	void Window::Create(const char* name, glm::vec2 size, bool fullscreen, bool windowed) {
+	bool Window::Create(const char* name, glm::vec2 size, bool fullscreen, bool windowed) {
 		if (!init)
 			if (!glfwInit()) {
 				std::cout << "Failed to init GLFW!" << std::endl;
 				assert(true);
-				return;
+				return false;
 			}
 		
 		if (fullscreen && windowed) {
@@ -33,21 +33,36 @@ namespace ORE {
 			}
 			
 			glfwMakeContextCurrent(window);
-			return;
+			return true;
 		}
 
 		window = glfwCreateWindow(size.x, size.y, name, fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 		if (window == nullptr) {
 			std::cout << "Failed to create GLFW window" << std::endl;
 			assert(true);
-			return;
+			return false;
 		}
 		
 		glfwMakeContextCurrent(window);
+		return true;
+	}
+
+	bool Window::InitGlad() {
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		{
+			std::cout << "Failed to initialize GLAD" << std::endl;
+			return false;
+		}
+		return true;
 	}
 
 	bool Window::ShouldClose() {
 		return glfwWindowShouldClose(window);
+	}
+
+	void Window::ClearColor(float r, float g, float b, float a) {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(r, g, b, a);
 	}
 
 	void Window::Poll() {

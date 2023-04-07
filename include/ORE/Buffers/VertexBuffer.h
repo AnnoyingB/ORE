@@ -26,7 +26,7 @@ namespace ORE {
 		virtual ~VertexBuffer();
 
 		// More specific type, does the same thing
-		void ChangeData(std::vector<Vertex> data);
+		void ChangeData(std::vector<Vertex> data = std::vector<Vertex>());
 		std::vector<Vertex> GetConstVertices() const { return _vertices; }
 		std::vector<Vertex>& GetVertices() { return _vertices; }
 		void AddVertex(Vertex value) { _vertices.push_back(value); }

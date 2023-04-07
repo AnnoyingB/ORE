@@ -14,7 +14,8 @@ namespace ORE {
 	}
 	
 	void VertexBuffer::ChangeData(std::vector<Vertex> data) {
-		_vertices = data;
-		Buffer::ChangeData(data.data());
+		if(!data.empty())
+			_vertices = data;
+		Buffer::ChangeData(_vertices.data());
 	}
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
 
@@ -13,8 +14,10 @@ namespace ORE {
 	public:
 		virtual ~Window();
 
-		void Create(const char* name, glm::vec2 size, bool fullscreen = false, bool windowed = true);
+		bool Create(const char* name, glm::vec2 size, bool fullscreen = false, bool windowed = true);
+		bool InitGlad();
 		bool ShouldClose();
+		void ClearColor(float r, float g, float b, float a);
 		void Poll();
 		void SetSizeCallback(GLFWwindowsizefun callback) { glfwSetWindowSizeCallback(window, callback); }
 
