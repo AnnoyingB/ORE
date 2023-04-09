@@ -1,8 +1,10 @@
 # ORE
 OpenGL Rendering Engine
 
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/AnnoyingB/ORE/codeql.yml) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/AnnoyingB/ORE) ![GitHub](https://img.shields.io/github/license/AnnoyingB/ORE)
+
 ## Build commands:
-`--extensions=oreml` This enables OREML (OpenGL Render Engine Model Loader)
+`--extensions=oreml` This enables OREML (OpenGL Rendering Engine Model Loader)
 
 ## ORE::Window
 Creates a window using GLFW using the `Create()` function. Use `ShouldClose()` in a while loop to check if it is finished. To initialize OpenGL use `InitGlad()`. To clear the window use `ClearColor()`. If you would like to change the viewport size, use the `SetSizeCallback()` function. To handle all the events use the `Poll()` function. If you want your own cursor, call `SetCursor()`. `xhot` is the point where you can click buttons, links etc.
