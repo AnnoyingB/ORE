@@ -1,3 +1,5 @@
+//#define ORE
+
 #include "orepch.h"
 #include "Window.h"
 

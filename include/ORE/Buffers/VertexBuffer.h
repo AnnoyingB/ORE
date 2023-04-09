@@ -22,7 +22,8 @@ namespace ORE {
 		std::vector<Vertex> _vertices;
 		unsigned int bufferType = GL_ARRAY_BUFFER;
 	public:
-		VertexBuffer();
+		VertexBuffer() {}
+		VertexBuffer(std::vector<Vertex> vertices);
 		virtual ~VertexBuffer();
 
 		// More specific type, does the same thing

@@ -1,6 +1,9 @@
 # ORE
 OpenGL Rendering Engine
 
+## Build commands:
+`--extensions=oreml` This enables OREML (OpenGL Render Engine Model Loader)
+
 ## ORE::Window
 Creates a window using GLFW using the `Create()` function. Use `ShouldClose()` in a while loop to check if it is finished. To initialize OpenGL use `InitGlad()`. To clear the window use `ClearColor()`. If you would like to change the viewport size, use the `SetSizeCallback()` function. To handle all the events use the `Poll()` function. If you want your own cursor, call `SetCursor()`. `xhot` is the point where you can click buttons, links etc.
 

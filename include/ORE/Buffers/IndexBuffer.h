@@ -8,7 +8,8 @@ namespace ORE {
 		std::vector<unsigned int> _indices;
 		unsigned int bufferType = GL_ELEMENT_ARRAY_BUFFER;
 	public:
-		IndexBuffer();
+		IndexBuffer() {}
+		IndexBuffer(std::vector<unsigned int> indices);
 		virtual ~IndexBuffer();
 
 		// More specific type, does the same thing

@@ -15,6 +15,12 @@ void GLCheckError() {
 //#endif
 
 namespace ORE {
+	struct MeshCreateInfo {
+		std::vector<Vertex> vertices;
+		std::vector<unsigned int> indices;
+		std::string_view shaderPath;
+	};
+
 	class Mesh {
 	private:
 		VertexArray m_vao;
@@ -22,7 +28,7 @@ namespace ORE {
 		IndexBuffer m_ibo;
 		Shader m_shader;
 	public:
-		Mesh();
+		Mesh(MeshCreateInfo);
 
 		// Hopefully accurate
 		bool operator==(const Mesh& rhs) {

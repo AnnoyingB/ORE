@@ -446,6 +446,7 @@
     <ClInclude Include="include\ORE\Buffers\VertexBuffer.h" />
     <ClInclude Include="include\ORE\Buffers\VertexArray.h" />
     <ClInclude Include="include\ORE\Window.h" />
+    <ClInclude Include="vendor\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />

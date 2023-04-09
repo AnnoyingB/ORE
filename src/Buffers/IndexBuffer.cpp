@@ -2,7 +2,9 @@
 #include "Buffers/IndexBuffer.h"
 
 namespace ORE {
-	IndexBuffer::IndexBuffer() {
+	IndexBuffer::IndexBuffer(std::vector<unsigned int> indices) {
+		_indices = indices;
+
 		glGenBuffers(1, &bufferID);
 		Bind();
 		glBufferData(bufferType, sizeof(_indices.data()), _indices.data(), GL_DYNAMIC_DRAW);

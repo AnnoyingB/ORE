@@ -11,6 +11,8 @@ namespace ORE {
 	private:
 		unsigned int shaderID;
 	public:
+		// please do not actually use this.
+		Shader() {}
 		/** 
 		 * @param
 		 * shaderPath - Should not have an extension. Keep the
