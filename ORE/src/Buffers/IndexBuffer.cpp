@@ -3,6 +3,7 @@
 
 namespace ORE {
 	IndexBuffer::IndexBuffer(std::vector<unsigned int> indices) {
+		bufferType = GL_ELEMENT_ARRAY_BUFFER;
 		_indices = indices;
 
 		glGenBuffers(1, &bufferID);

@@ -6,7 +6,6 @@ namespace ORE {
 	{
 	private:
 		std::vector<unsigned int> _indices;
-		unsigned int bufferType = GL_ELEMENT_ARRAY_BUFFER;
 	public:
 		IndexBuffer() {}
 		IndexBuffer(std::vector<unsigned int> indices);

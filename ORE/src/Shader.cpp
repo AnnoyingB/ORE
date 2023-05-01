@@ -2,9 +2,12 @@
 #include "Shader.h"
 
 namespace ORE {
-	Shader::Shader(std::string_view shaderPath) {
-		std::string vertexPath = std::string(shaderPath) + ".vs";
-		std::string fragmentPath = std::string(shaderPath) + ".fs";
+	const std::string const Shader::OREShaders = std::string("include\\ORE\\Shaders\\");
+
+	Shader::Shader(std::string shaderPath) {
+		shaderID = -1;
+		std::string vertexPath = shaderPath + ".orevs";
+		std::string fragmentPath = shaderPath + ".orefs";
 		
 		std::ifstream vShaderFile, fShaderFile;
 		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -79,6 +82,9 @@ namespace ORE {
 
 		glDeleteShader(vertexID);
 		glDeleteShader(fragmentID);
+
+		assert(shaderID != -1);
+		GLCheckError();
 	}
 
 	Shader::~Shader() {

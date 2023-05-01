@@ -3,12 +3,27 @@
 
 namespace ORE {
 	VertexBuffer::VertexBuffer(std::vector<Vertex> vertices) {
+		bufferType = GL_ARRAY_BUFFER;
+
+		/*std::vector<float> vertexPositions;
+
+		for (Vertex vert : vertices) {
+			vertexPositions.push_back(vert.position.x);
+			vertexPositions.push_back(vert.position.y);
+			vertexPositions.push_back(vert.position.z);
+		}*/
+
+		GLCheckError();
 		_vertices = vertices;
 
 		glGenBuffers(1, &bufferID);
+		GLCheckError();
 		Bind();
-		glBufferData(bufferType, sizeof(_vertices.data()), (void*)_vertices.data(), GL_DYNAMIC_DRAW);
+		GLCheckError();
+		glBufferData(bufferType, _vertices.size() * sizeof(Vertex), &vertices[0], GL_DYNAMIC_DRAW);
+		GLCheckError();
 		Unbind();
+		GLCheckError();
 	}
 
 	VertexBuffer::~VertexBuffer() {

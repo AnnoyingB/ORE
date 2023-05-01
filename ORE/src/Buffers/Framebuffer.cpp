@@ -41,14 +41,36 @@ namespace ORE {
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		this->width = width;
+		this->height = height;
 	}
 
 	void Framebuffer::Bind() {
 		glBindFramebuffer(GL_FRAMEBUFFER, bufferID);
+		glViewport(0, 0, width, height);
 	}
 
 	void Framebuffer::Unbind() {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	glm::vec4 Framebuffer::ReadPixel(int x, int y) {
+		glReadBuffer(GL_COLOR_ATTACHMENT0);
+
+		glm::vec4 colData;
+		glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, &colData[0]);
+		glReadBuffer(GL_NONE);
+		return colData;
+	}
+
+	int Framebuffer::ReadPixelID(int x, int y) {
+		glReadBuffer(GL_COLOR_ATTACHMENT1);
+
+		int id;
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &id);
+		glReadBuffer(GL_NONE);
+		return id;
 	}
 
 	Framebuffer::~Framebuffer() {

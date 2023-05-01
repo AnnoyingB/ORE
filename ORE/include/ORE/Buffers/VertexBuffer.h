@@ -1,13 +1,19 @@
 #pragma once
 #include "Buffer.h"
+#include "Debugging.h"
 
 namespace ORE {
 	struct Vertex {
 		glm::vec3 position;
 		glm::vec4 colour; // RGBA
 		glm::vec3 normal;
+		glm::vec3 texCoord;
 
-		bool operator==(const Vertex& vert) {
+		Vertex() = default;
+		Vertex(glm::vec3 pos, glm::vec4 col, glm::vec3 norm, glm::vec3 tex = glm::vec3(0.f))
+			: position(pos), colour(col), normal(norm), texCoord(tex) {}
+
+		bool operator==(const Vertex& vert) const {
 			if (this->position == vert.position &&
 				this->colour == vert.colour &&
 				this->normal == vert.normal)
@@ -20,7 +26,6 @@ namespace ORE {
 	{
 	private:
 		std::vector<Vertex> _vertices;
-		unsigned int bufferType = GL_ARRAY_BUFFER;
 	public:
 		VertexBuffer() {}
 		VertexBuffer(std::vector<Vertex> vertices);

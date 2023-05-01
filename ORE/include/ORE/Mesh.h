@@ -1,34 +1,35 @@
 #pragma once
 #include "Buffers/VertexArray.h"
 #include "Buffers/IndexBuffer.h"
+#include "Camera.h"
+#include "Material.h"
 #include "Shader.h"
+#include "glm/mat4x4.hpp"
+#include "Debugging.h"
 
-//#ifdef _DEBUG
-void GLCheckError() {
-	GLenum error;
-	while ((error = glGetError()) != GL_NO_ERROR) {
-		std::cout << "GL Error: " << error << std::endl;
-	}
-}
-//#else
-//void GLCheckError() {}
-//#endif
+#include <iostream>
 
 namespace ORE {
 	struct MeshCreateInfo {
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;
-		std::string_view shaderPath;
+		std::string shaderPath;
+		int meshID = -1.0f; // Use some kind of ECS to use this for clicking on an item to select it
 	};
 
 	class Mesh {
 	private:
-		VertexArray m_vao;
-		VertexBuffer m_vbo;
-		IndexBuffer m_ibo;
-		Shader m_shader;
+		VertexArray* m_vao;
+		VertexBuffer* m_vbo;
+		IndexBuffer* m_ibo;
 	public:
+		Mesh() = default;
 		Mesh(MeshCreateInfo);
+
+		virtual ~Mesh();
+
+		Material* Material;
+		glm::mat4 ModelMatrix;
 
 		// Hopefully accurate
 		bool operator==(const Mesh& rhs) {
@@ -46,7 +47,7 @@ namespace ORE {
 			
 			size_t size = lhsVertices.size() > rhsVertices.size() ? lhsVertices.size() : rhsVertices.size();
 			Mesh smallestMesh = lhsVertices.size() == size ? *this : rhs;
-			Mesh biggestMesh = smallestMesh == *this ? rhs : *this;
+			Mesh biggestMesh = &smallestMesh == this ? rhs : *this;
 
 			// Try to simplify the mesh.
 			bool changed = false;
@@ -83,11 +84,15 @@ namespace ORE {
 			return *this;
 		}
 
-		VertexBuffer GetConstVBO() const { return m_vbo; }
-		VertexBuffer& GetVBO() { return m_vbo; }
-		IndexBuffer GetConstIBO() const { return m_ibo; };
-		IndexBuffer& GetIBO() { return m_ibo; }
+		VertexBuffer& GetConstVBO() const { return const_cast<VertexBuffer& const>(*m_vbo); }
+		VertexBuffer& GetVBO() { return *m_vbo; }
+		IndexBuffer& GetConstIBO() const { return const_cast<IndexBuffer& const>(*m_ibo); };
+		IndexBuffer& GetIBO() { return *m_ibo; }
+		Shader& GetConstShader() const { return this->Material->GetConstShader(); }
+		Shader& GetShader() { return this->Material->GetShader(); }
 
-		void Draw();
+		void Apply(Camera camera);
+		void Draw(Camera cam);
+		void SetID(int id);
 	};
 }

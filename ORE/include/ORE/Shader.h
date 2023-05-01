@@ -3,7 +3,8 @@
 #include <sstream>
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "glad/glad.h"
+#include <filesystem>
+#include "Debugging.h"
 
 namespace ORE {
 	class Shader
@@ -11,14 +12,16 @@ namespace ORE {
 	private:
 		unsigned int shaderID;
 	public:
+		const static const std::string OREShaders;
+
 		// please do not actually use this.
-		Shader() {}
+		Shader() = default;
 		/** 
 		 * @param
 		 * shaderPath - Should not have an extension. Keep the
 		 * file name for the vertex and fragment shader the same.
 		 */
-		Shader(std::string_view shaderPath);
+		Shader(std::string shaderPath);
 		virtual ~Shader();
 
 		void Bind();

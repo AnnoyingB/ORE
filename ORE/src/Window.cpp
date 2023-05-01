@@ -2,6 +2,10 @@
 #include "Window.h"
 
 namespace ORE {
+	void ErrorCallback(int code, const char* description) {
+		std::cout << "Code: " << code << " " << description << std::endl;
+	}
+
 	Window::~Window() {
 		if (!init) return;
 		glfwDestroyWindow(window);
@@ -10,12 +14,13 @@ namespace ORE {
 
 	bool Window::Create(const char* name, glm::vec2 size, bool fullscreen, bool windowed) {
 		if (!init)
-			if (!glfwInit()) {
-				std::cout << "Failed to init GLFW!" << std::endl;
-				assert(true);
-				return false;
-			}
+			assert(glfwInit() && "Failed to init GLFW!");
 		
+		glfwSetErrorCallback(ErrorCallback);
+
+		// GLFW OpenGL version 3.3
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		if (fullscreen && windowed) {
 			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 			const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -26,22 +31,14 @@ namespace ORE {
 			glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
 			window = glfwCreateWindow(mode->width, mode->height, name, monitor, NULL);
-			if (window == nullptr) {
-				std::cout << "Failed to create GLFW window" << std::endl;
-				assert(true);
-				return false;
-			}
+			assert(window && "Failed to create GLFW window");
 			
 			glfwMakeContextCurrent(window);
 			return true;
 		}
 
 		window = glfwCreateWindow(size.x, size.y, name, fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
-		if (window == nullptr) {
-			std::cout << "Failed to create GLFW window" << std::endl;
-			assert(true);
-			return false;
-		}
+		assert(window && "Failed to create GLFW window");
 		
 		glfwMakeContextCurrent(window);
 		return true;
@@ -69,6 +66,7 @@ namespace ORE {
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
+
 	void Window::SetCursor(std::string_view cursorPath, int xhot, int yhot)
 	{
 		int width, height, numComponents;

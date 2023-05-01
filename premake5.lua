@@ -45,7 +45,7 @@ project "OREML"
 	filter "configurations:Release"
 		defines { "NDEBUG" }
 		optimize "On"
-	
+
 
 project "ORE"
 	location "ORE"
@@ -55,11 +55,16 @@ project "ORE"
 	targetdir "bin/%{cfg.buildcfg}"
 
 	files { "ORE/**.h", "ORE/**.c", "ORE/**.cpp", "ORE/**.inl", "ORE/**.hpp" }
+	includedirs { "ORE/vendor", "ORE/include/ORE" }
+	libdirs { "ORE/vendor/libs" }
+	links
+	{
+		"glfw3.lib",
+		"glfw3_mt.lib",
+	}
 
-	filter "options:extensions=none"
-		includedirs { "ORE/vendor", "ORE/include/ORE" }
 	filter "options:extensions=oreml"
-		includedirs { "ORE/vendor", "ORE/include/ORE", "OREML/include" }
+		includedirs { "OREML/include" }
 		libdirs { "OREML/x64/Debug" }
 		links { "OREML.lib" }
 
