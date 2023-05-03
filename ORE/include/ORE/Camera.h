@@ -17,7 +17,7 @@ namespace ORE {
 
 		Camera() = default;
 
-		void SetAspect(float width, float height);
+		void SetAspect(glm::vec2 size);
 		glm::mat4 GetProjection();
 		glm::mat4 GetView(glm::vec3 upVector = glm::vec3(0, 1, 0));
 

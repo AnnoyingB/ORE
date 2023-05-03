@@ -67,6 +67,12 @@ namespace ORE {
 		glfwSwapBuffers(window);
 	}
 
+	glm::vec2 Window::GetWindowSize() {
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
+		return { width, height };
+	}
+
 	void Window::SetCursor(std::string_view cursorPath, int xhot, int yhot)
 	{
 		int width, height, numComponents;

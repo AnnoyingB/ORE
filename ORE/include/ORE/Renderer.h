@@ -8,8 +8,9 @@ namespace ORE {
 	class Renderer {
 	public:
 		static std::vector<Mesh*> RenderableMeshes;
-		static std::vector<Framebuffer*> Framebuffers;
+		static Framebuffer* CurrentFramebuffer;
 		static Camera CurrentCamera;
+		static int RenderCalls;
 
 		enum RT {
 			None = 0,

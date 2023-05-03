@@ -2,8 +2,8 @@
 #include "orepch.h"
 
 namespace ORE {
-	void Camera::SetAspect(float width, float height) {
-		Aspect = width / height;
+	void Camera::SetAspect(glm::vec2 size) {
+		Aspect = size.x / size.y;
 	}
 
 	glm::mat4 Camera::GetProjection() {

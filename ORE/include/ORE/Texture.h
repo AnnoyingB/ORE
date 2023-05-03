@@ -39,9 +39,9 @@ namespace ORE {
 	struct TextureCreateInfo {
 		std::string texturePath;
 
-		Filter filterMin, filterMag;
+		Filter filterMin, filterMag;// Use either Filters or MipMaps (you cannot use both)
 		Repeating repeatS, repeatT;
-		MipMaps mipmapsMin, mipmapsMag;
+		MipMaps mipmapsMin, mipmapsMag; // Use either MipMaps or Filters (you cannot use both)
 		TextureType textureType;
 		glm::vec4 borderCol = glm::vec4(0, 0, 0, 0); // If you are using ClampToBorder, set this.
 		int depth; // If you are not using a 3d texture don't worry about this.

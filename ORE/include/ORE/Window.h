@@ -20,6 +20,7 @@ namespace ORE {
 		bool ShouldClose();
 		void ClearColor(float r, float g, float b, float a);
 		void Poll();
+		glm::vec2 GetWindowSize();
 		void SetSizeCallback(GLFWwindowsizefun callback) { glfwSetWindowSizeCallback(window, callback); }
 
 		void SetCursor(std::string_view cursorPath, int xhot, int yhot);

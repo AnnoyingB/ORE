@@ -1,17 +1,20 @@
 #include "Renderer.h"
 #include "orepch.h"
 
+#include "Buffers/Framebuffer.h"
+
 namespace ORE {
 	std::vector<Mesh*> Renderer::RenderableMeshes = std::vector<Mesh*>();
-	std::vector<Framebuffer*> Renderer::Framebuffers = std::vector<Framebuffer*>();
+	Framebuffer* Renderer::CurrentFramebuffer = nullptr;
 	Camera Renderer::CurrentCamera = Camera();
+	int Renderer::RenderCalls = 0;
 
 	void Renderer::Init(GLFWwindow* window) {
 		CurrentCamera.Position = glm::vec3(0.5f, 0.f, 1.f);
 		CurrentCamera.Rotation = glm::vec3(45.f, 0.f, 0.f);
 		int width, height;
 		glfwGetWindowSize(window, &width, &height);
-		CurrentCamera.SetAspect((float)width, (float)height);
+		CurrentCamera.SetAspect( { (float)width, (float)height } );
 		CurrentCamera.Fovy = 90;
 	}
 
@@ -24,12 +27,19 @@ namespace ORE {
 	void Renderer::Cleanup() {
 		for (Mesh* mesh : RenderableMeshes)
 			delete mesh;
-		for (Framebuffer* fbo : Framebuffers)
-			delete fbo;
+		if (CurrentFramebuffer)
+			delete CurrentFramebuffer;
 	}
 
 	void Renderer::RenderMeshes() {
-		for (Mesh* mesh : RenderableMeshes)
+		RenderCalls = 0;
+		if (CurrentFramebuffer)
+			CurrentFramebuffer->Bind();
+		for (Mesh* mesh : RenderableMeshes) {
 			mesh->Draw(CurrentCamera);
+			RenderCalls++;
+		}
+		if (CurrentFramebuffer)
+			CurrentFramebuffer->Unbind();
 	}
 }
