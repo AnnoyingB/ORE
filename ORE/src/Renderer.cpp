@@ -20,7 +20,9 @@ namespace ORE {
 
 	Mesh* Renderer::CreateMesh(MeshCreateInfo MCI) {
 		Mesh* mesh = new Mesh(MCI);
+		GLCheckError();
 		RenderableMeshes.push_back(mesh);
+		GLCheckError();
 		return mesh;
 	}
 

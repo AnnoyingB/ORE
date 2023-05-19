@@ -18,7 +18,7 @@ namespace ORE {
 	};
 
 	class Mesh {
-	private:
+	protected:
 		VertexArray* m_vao;
 		VertexBuffer* m_vbo;
 		IndexBuffer* m_ibo;
@@ -91,8 +91,9 @@ namespace ORE {
 		Shader& GetConstShader() const { return this->Material->GetConstShader(); }
 		Shader& GetShader() { return this->Material->GetShader(); }
 
+		virtual void Draw(Camera cam);
+
 		void Apply(Camera camera);
-		void Draw(Camera cam);
 		void SetID(int id);
 	};
 }

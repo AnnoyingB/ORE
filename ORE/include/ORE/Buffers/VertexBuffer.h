@@ -36,5 +36,7 @@ namespace ORE {
 		std::vector<Vertex> GetConstVertices() const { return _vertices; }
 		std::vector<Vertex>& GetVertices() { return _vertices; }
 		void AddVertex(Vertex value) { _vertices.push_back(value); }
+
+		operator unsigned int() { return bufferID; }
 	};
 }

@@ -6,8 +6,8 @@ namespace ORE {
 
 	Shader::Shader(std::string shaderPath) {
 		shaderID = -1;
-		std::string vertexPath = shaderPath + ".orevs";
-		std::string fragmentPath = shaderPath + ".orefs";
+		std::string vertexPath = shaderPath + ".vert";
+		std::string fragmentPath = shaderPath + ".frag";
 		
 		std::ifstream vShaderFile, fShaderFile;
 		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -95,22 +95,23 @@ namespace ORE {
 		glUseProgram(shaderID);
 	}
 
-	void Shader::SetBool(const std::string& name, bool value) const
-	{
+	void Shader::SetBool(const std::string& name, bool value) const {
 		glUniform1i(glGetUniformLocation(shaderID, name.c_str()), (int)value);
 	}
 
-	void Shader::SetInt(const std::string& name, int value) const
-	{
+	void Shader::SetInt(const std::string& name, int value) const {
 		glUniform1i(glGetUniformLocation(shaderID, name.c_str()), value);
 	}
 
-	void Shader::SetFloat(const std::string& name, float value) const
-	{
+	void Shader::SetFloat(const std::string& name, float value) const {
 		glUniform1f(glGetUniformLocation(shaderID, name.c_str()), value);
 	}
 
 	void Shader::SetMat4(const std::string& name, glm::mat4 value) const {
 		glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &value[0][0]);
+	}
+
+	void Shader::SetVec3(const std::string& name, glm::vec3 value) const {
+		glUniform3fv(glGetUniformLocation(shaderID, name.c_str()), 1, &value[0]);
 	}
 }

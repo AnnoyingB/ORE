@@ -1,10 +1,21 @@
 #include "orepch.h"
 #include "Window.h"
+#include "glad/glad.h"
 
 namespace ORE {
 	void ErrorCallback(int code, const char* description) {
 		std::cout << "Code: " << code << " " << description << std::endl;
 	}
+
+	void DebugMessageCallback([[maybe_unused]] GLenum source, GLenum type, [[maybe_unused]] GLuint id, [[maybe_unused]] GLenum severity, [[maybe_unused]] GLsizei messageLength, const GLchar* message, const void*)
+	{
+		if (type == GL_DEBUG_TYPE_ERROR)
+		{
+			printf("GL: DEBUG CALLBACK type = {}, severity = error, message = {}\n", type, message);
+			assert(false);
+		}
+	}
+
 
 	Window::~Window() {
 		if (!init) return;
@@ -13,14 +24,16 @@ namespace ORE {
 	}
 
 	bool Window::Create(const char* name, glm::vec2 size, bool fullscreen, bool windowed) {
-		if (!init)
+		if (!init) {
 			assert(glfwInit() && "Failed to init GLFW!");
+			init = true;
+		}
 		
 		glfwSetErrorCallback(ErrorCallback);
 
-		// GLFW OpenGL version 3.3
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		// GLFW OpenGL version 4.5
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 		if (fullscreen && windowed) {
 			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 			const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -50,6 +63,9 @@ namespace ORE {
 			std::cout << "Failed to initialize GLAD" << std::endl;
 			return false;
 		}
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glDebugMessageCallback(DebugMessageCallback, nullptr);
+
 		return true;
 	}
 

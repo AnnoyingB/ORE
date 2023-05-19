@@ -8,7 +8,7 @@ namespace ORE {
 
 		glGenBuffers(1, &bufferID);
 		Bind();
-		glBufferData(bufferType, sizeof(_indices.data()), _indices.data(), GL_DYNAMIC_DRAW);
+		glBufferData(bufferType, _indices.size() * sizeof(unsigned int), _indices.data(), GL_DYNAMIC_DRAW);
 		Unbind();
 	}
 

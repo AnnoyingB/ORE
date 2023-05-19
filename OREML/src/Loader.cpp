@@ -22,6 +22,7 @@ namespace OREML {
 		for (int i = 0; i < mesh->mNumFaces; i++)
 			for (int j = 0; j < mesh->mFaces[i].mNumIndices; j++)
 				indices.push_back(*mesh->mFaces[i].mIndices);
+		meshInfo.indices = indices;
 
 		for (int i = 0; i < mesh->mNumVertices; i++) {
 			aiVector3D pos = mesh->mVertices[i];
@@ -29,7 +30,6 @@ namespace OREML {
 			aiVector3D normal = mesh->mNormals[i];
 			
 			meshInfo.vertices.push_back({ glm::vec3(pos.x, pos.y, pos.z), glm::vec4(col->r, col->g, col->b, col->a), glm::vec3(normal.x, normal.y, normal.z) });
-			meshInfo.indices = indices;
 		}
 
 		return meshInfo;

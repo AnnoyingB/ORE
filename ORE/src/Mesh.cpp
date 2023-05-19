@@ -19,15 +19,19 @@ namespace ORE {
 		m_ibo->Bind();
 
 		m_vao->SetData();
+		GLCheckError();
 
-		m_ibo->Unbind();
 		m_vao->Unbind();
 		GLCheckError();
 
 		ModelMatrix = glm::mat4(1.f);
 		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(1, 0, 0));
 
-		Material->GetConstShader().SetInt("primitiveID", meshInfo.meshID);
+		m_vbo->Unbind();
+		m_ibo->Unbind();
+		GLCheckError();
+		//Material->GetConstShader().SetInt("primitiveID", meshInfo.meshID);
+		GLCheckError();
 	}
 
 	Mesh::~Mesh() {
@@ -52,10 +56,12 @@ namespace ORE {
 		GLCheckError();
 		Apply(cam);
 		GLCheckError();
+		m_ibo->Bind();
 		
-		std::vector<unsigned int> indices = GetIBO().GetIndices();
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, indices.data());
+		glDrawElements(GL_TRIANGLES, m_ibo->GetConstIndices().size(), GL_UNSIGNED_INT, 0);
+		GLCheckError();
 
+		m_ibo->Unbind();
 		m_vao->Unbind();
 		GLCheckError();
 	}

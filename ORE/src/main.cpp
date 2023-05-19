@@ -3,30 +3,46 @@
 #include "orepch.h"
 #include "Window.h"
 #include "Renderer.h"
+//#include "OREML/Loader.h"
+
+using namespace ORE;
 
 void WindowSizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
 int main() {
-	ORE::Window window;
+	Window window;
 	window.Create("ORE", { 1280, 720 });
 	window.InitGlad();
 	window.SetSizeCallback(WindowSizeCallback);
 
-	ORE::Renderer::Init(window);
+	Renderer::Init(window);
 
-	ORE::MeshCreateInfo MCI {};
+	MeshCreateInfo MCI {};
 	MCI.vertices = std::vector<ORE::Vertex>();
 	MCI.vertices.push_back({ { -0.5f, -0.5f, 0.0f }, { 1.f, 0.f, 0.f, 1.f }, { 0.f, 0.f, 0.f } });
 	MCI.vertices.push_back({ { 0.5f, -0.5f, 0.0f }, { 0.f, 1.f, 0.f, 1.f }, { 0.f, 0.f, 0.f } });
 	MCI.vertices.push_back({ { 0.0f, 0.5f, 0.0f }, { 0.f, 0.f, 1.f, 1.f }, { 0.f, 0.f, 0.f } });
 	MCI.indices = { 0, 1, 2 };
+	//ORE::MeshCreateInfo MCI{};
+	//MCI = OREML::Loader::Load("include\\ORE\\Models\\untitled.fbx")[0];
 	MCI.shaderPath = ORE::Shader::OREShaders + "SimpleShader";
 
+	CurrentDirectionalLight = std::make_unique<DirectionalLight>();
+	CurrentDirectionalLight->direction = glm::vec3(0);
+
+	GLCheckError();
 	ORE::Mesh* mesh = ORE::Renderer::CreateMesh(MCI);
+	GLCheckError();
+
+	mesh->Material->diffuse = glm::vec3(1);
+	mesh->GetConstShader().Bind();
+	mesh->Material->Apply();
+	mesh->Material->UpdateLighting();
 
 	while (!window.ShouldClose()) {
+		//GLCheckError();
 		window.ClearColor(1, 0, 0, 1);
 
 		ORE::Renderer::RenderMeshes();

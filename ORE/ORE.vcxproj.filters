@@ -10,11 +10,17 @@
     <Filter Include="include\ORE\Buffers">
       <UniqueIdentifier>{3A0ABD36-A66B-9A44-2FD9-E0F69B39D103}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\ORE\Objects">
+      <UniqueIdentifier>{77E967F3-E34A-4501-6CB8-8BB3D8187CC0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Buffers">
       <UniqueIdentifier>{A947D8FD-15FD-50F3-9EF1-4ACA0AA647F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Objects">
+      <UniqueIdentifier>{E62683BA-52DC-FBAF-DBD0-F5864785F2B3}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
@@ -63,10 +69,28 @@
     <ClInclude Include="include\ORE\Buffers\VertexBuffer.h">
       <Filter>include\ORE\Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="include\ORE\Camera.h">
+      <Filter>include\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ORE\Debugging.h">
+      <Filter>include\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ORE\Material.h">
+      <Filter>include\ORE</Filter>
+    </ClInclude>
     <ClInclude Include="include\ORE\Mesh.h">
       <Filter>include\ORE</Filter>
     </ClInclude>
+    <ClInclude Include="include\ORE\Objects\Sprite2D.h">
+      <Filter>include\ORE\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ORE\Renderer.h">
+      <Filter>include\ORE</Filter>
+    </ClInclude>
     <ClInclude Include="include\ORE\Shader.h">
+      <Filter>include\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ORE\Texture.h">
       <Filter>include\ORE</Filter>
     </ClInclude>
     <ClInclude Include="include\ORE\Window.h">
@@ -1368,11 +1392,7 @@
     <ClInclude Include="vendor\stb_image.h">
       <Filter>vendor</Filter>
     </ClInclude>
-    <ClInclude Include="include\ORE\Renderer.h" />
-    <ClInclude Include="include\ORE\Material.h" />
-    <ClInclude Include="include\ORE\Camera.h" />
-    <ClInclude Include="include\ORE\Debugging.h" />
-    <ClInclude Include="include\ORE\Texture.h" />
+    <ClInclude Include="include\ORE\Lighting\DirectionalLight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Buffers\Buffer.cpp">
@@ -1390,10 +1410,25 @@
     <ClCompile Include="src\Buffers\VertexBuffer.cpp">
       <Filter>src\Buffers</Filter>
     </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Material.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\Mesh.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Objects\Sprite2D.cpp">
+      <Filter>src\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\Shader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
@@ -1408,13 +1443,5 @@
     <ClCompile Include="vendor\glm\detail\glm.cpp">
       <Filter>vendor\glm\detail</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer.cpp" />
-    <ClCompile Include="src\Material.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="include\ORE\Shaders\SimpleShader.orefs" />
-    <None Include="include\ORE\Shaders\SimpleShader.orevs" />
   </ItemGroup>
 </Project>

@@ -11,16 +11,10 @@ newoption {
 }
 
 workspace "OREProj"
-	configurations { "Debug", "Release" }
-	platforms { "x64", "x86" }
-	
-	filter "platforms:x86"
-    	kind "StaticLib"
-    	architecture "x32"
-
-  	filter "platforms:x64"
-		kind "StaticLib"
-    	architecture "x64"
+	configurations { "Debug", "Release", "ExecTest" }
+	platforms { "x64" }
+	kind "StaticLib"
+    architecture "x64"
 
 
 project "OREML"
@@ -37,6 +31,7 @@ project "OREML"
 	files { "OREML/**.h", "OREML/**.c", "OREML/**.cpp", "OREML/**.inl", "OREML/**.hpp" }
 
 	includedirs { "OREML/vendor/assimp/include", "OREML/include/OREML" }
+	links { "assimp.dll" }
 
 	filter "configurations:Debug"
 		defines { "DEBUG" }
@@ -45,11 +40,17 @@ project "OREML"
 	filter "configurations:Release"
 		defines { "NDEBUG" }
 		optimize "On"
+	filter {}
 
 
 project "ORE"
 	location "ORE"
-	kind "StaticLib"
+	filter "configurations:ExecTest"
+	  kind "ConsoleApp"
+	filter "configurations:Debug or configurations:Release"
+	  kind "StaticLib"
+	filter {}
+
 	language "C++"
 	cppdialect "C++20"
 	targetdir "bin/%{cfg.buildcfg}"
@@ -68,7 +69,7 @@ project "ORE"
 		libdirs { "OREML/x64/Debug" }
 		links { "OREML.lib" }
 
-	filter "configurations:Debug"
+	filter "configurations:Debug or configurations:ExecTest"
       defines { "DEBUG" }
       symbols "On"
 
