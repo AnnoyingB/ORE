@@ -13,5 +13,5 @@ namespace ORE {
 		glm::vec3 direction;
 	};
 
-	static std::unique_ptr<DirectionalLight> CurrentDirectionalLight;
+	inline std::unique_ptr<DirectionalLight> CurrentDirectionalLight = nullptr;
 }

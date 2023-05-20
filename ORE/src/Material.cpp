@@ -10,7 +10,9 @@ namespace ORE {
 		ambient = glm::vec3(0);
 		specular = glm::vec3(0);
 		shininess = 0.f;
+		GLCheckError();
 
+		m_shader->Bind();
 		Apply();
 	}
 
@@ -19,6 +21,10 @@ namespace ORE {
 	}
 
 	void Material::UpdateLighting() {
+		if (!CurrentDirectionalLight) {
+			printf("No direcitional light");
+			return;
+		}
 		m_shader->SetVec3("dirLight.direction", CurrentDirectionalLight->direction);
 		m_shader->SetVec3("dirLight.diffuse", CurrentDirectionalLight->diffuse);
 		m_shader->SetVec3("dirLight.ambient", CurrentDirectionalLight->ambient);

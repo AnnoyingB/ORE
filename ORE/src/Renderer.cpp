@@ -38,6 +38,8 @@ namespace ORE {
 		if (CurrentFramebuffer)
 			CurrentFramebuffer->Bind();
 		for (Mesh* mesh : RenderableMeshes) {
+			mesh->GetConstShader().Bind();
+			mesh->GetConstShader().SetVec3("viewPos", CurrentCamera.Position);
 			mesh->Draw(CurrentCamera);
 			RenderCalls++;
 		}

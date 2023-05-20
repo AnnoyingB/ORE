@@ -1443,5 +1443,6 @@
     <ClCompile Include="vendor\glm\detail\glm.cpp">
       <Filter>vendor\glm\detail</Filter>
     </ClCompile>
+    <ClCompile Include="src\Lighting\DirectionalLight.cpp" />
   </ItemGroup>
 </Project>

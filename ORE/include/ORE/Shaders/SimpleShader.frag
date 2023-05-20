@@ -26,17 +26,15 @@ in vec3 FragPos;
 
 uniform int primitiveID;
 
-uniform vec3 lightPosition;
-uniform vec3 lightingDir;
 uniform vec3 viewPos;
 
-vec3 CalculateDirectionalLight(DirLight light, vec3 normal){
+vec3 CalculateDirectionalLight(DirLight light, vec3 normal, vec3 viewDir){
     vec3 lightDir = normalize(-light.direction);
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
     // specular shading
     vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(light.direction, reflectDir), 0.0), material.shininess);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     // combine results
     vec3 ambient  = light.ambient  * vec3(material.diffuse);
     vec3 diffuse  = light.diffuse  * diff * vec3(material.diffuse);
@@ -81,8 +79,12 @@ void main()
         FragColor = vec4(result, 1.0);
     }*/
 
+    vec3 viewDir = normalize(viewPos - FragPos);
+
     vec3 result = vec3(0);
-    result += CalculateDirectionalLight(dirLight, aNormal);
+    result += CalculateDirectionalLight(dirLight, normalize(aNormal), viewDir);
+    //result *= vec3(vertexColor);
+    FragColor = vec4(result, 1.0);
 
     id = primitiveID;
 }
