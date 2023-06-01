@@ -2,7 +2,11 @@
 #include "Shader.h"
 
 namespace ORE {
-	const std::string const Shader::OREShaders = std::string("include\\ORE\\Shaders\\");
+	inline const std::string Shader::OREShaders = std::string("include\\ORE\\Shaders\\");
+	inline const std::string Shader::PBRShader = Shader::OREShaders + "PBRShader";
+	inline const std::string Shader::CubeMapShader = Shader::OREShaders + "CubeMap";
+	inline const std::string Shader::SkyBoxShader = Shader::OREShaders + "SkyBoxShader";
+	inline const std::string Shader::BillboardShader = Shader::OREShaders + "BillboardShader";
 
 	Shader::Shader(std::string shaderPath) {
 		shaderID = -1;
@@ -95,23 +99,90 @@ namespace ORE {
 		glUseProgram(shaderID);
 	}
 
-	void Shader::SetBool(const std::string& name, bool value) const {
-		glUniform1i(glGetUniformLocation(shaderID, name.c_str()), (int)value);
+	void Shader::SetBool(const std::string& name, bool value) {
+		GLint location;
+		if (shaderLocations.find(name) == shaderLocations.end()) {
+			location = glGetUniformLocation(shaderID, name.c_str());
+			shaderLocations[name] = location;
+		}
+		else {
+			location = shaderLocations.find(name)->second;
+		}
+		glProgramUniform1i(shaderID, location, (int)value);
 	}
 
-	void Shader::SetInt(const std::string& name, int value) const {
-		glUniform1i(glGetUniformLocation(shaderID, name.c_str()), value);
+	void Shader::SetInt(const std::string& name, int value) {
+		GLint location;
+		if (shaderLocations.find(name) == shaderLocations.end()) {
+			location = glGetUniformLocation(shaderID, name.c_str());
+			shaderLocations[name] = location;
+		}
+		else {
+			location = shaderLocations.find(name)->second;
+		}
+		glProgramUniform1i(shaderID, location, value);
 	}
 
-	void Shader::SetFloat(const std::string& name, float value) const {
-		glUniform1f(glGetUniformLocation(shaderID, name.c_str()), value);
+	void Shader::SetFloat(const std::string& name, float value) {
+		GLint location;
+		if (shaderLocations.find(name) == shaderLocations.end()) {
+			location = glGetUniformLocation(shaderID, name.c_str());
+			shaderLocations[name] = location;
+		}
+		else {
+			location = shaderLocations.find(name)->second;
+		}
+		glProgramUniform1f(shaderID, location, value);
 	}
 
-	void Shader::SetMat4(const std::string& name, glm::mat4 value) const {
-		glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &value[0][0]);
+	void Shader::SetMat4(const std::string& name, glm::mat4 value) {
+		GLint location;
+		if (shaderLocations.find(name) == shaderLocations.end()) {
+			location = glGetUniformLocation(shaderID, name.c_str());
+			shaderLocations[name] = location;
+		}
+		else {
+			location = shaderLocations.find(name)->second;
+		}
+		glProgramUniformMatrix4fv(shaderID, location, 1, GL_FALSE, &value[0][0]);
 	}
 
-	void Shader::SetVec3(const std::string& name, glm::vec3 value) const {
-		glUniform3fv(glGetUniformLocation(shaderID, name.c_str()), 1, &value[0]);
+	void Shader::SetMat3(const std::string& name, glm::mat3 value) {
+		GLint location;
+		if (shaderLocations.find(name) == shaderLocations.end()) {
+			location = glGetUniformLocation(shaderID, name.c_str());
+			shaderLocations[name] = location;
+		}
+		else {
+			location = shaderLocations.find(name)->second;
+		}
+		glProgramUniformMatrix3fv(shaderID, location, 1, GL_FALSE, &value[0][0]);
+	}
+
+	void Shader::SetVec3(const std::string& name, glm::vec3 value) {
+		GLint location;
+		if (shaderLocations.find(name) == shaderLocations.end()) {
+			location = glGetUniformLocation(shaderID, name.c_str());
+			shaderLocations[name] = location;
+		}
+		else {
+			location = shaderLocations.find(name)->second;
+		}
+		glProgramUniform3fv(shaderID, location, 1, &value[0]);
+	}
+
+	void Shader::SetTexture(const std::string& name, const Texture& value, int texID) {
+		GLint location;
+		if (shaderLocations.find(name) == shaderLocations.end()) {
+			location = glGetUniformLocation(shaderID, name.c_str());
+			shaderLocations[name] = location;
+		}
+		else {
+			location = shaderLocations.find(name)->second;
+		}
+		glActiveTexture(GL_TEXTURE0 + texID);
+		value.Bind();
+		glProgramUniform1i(shaderID, location, texID);
+		value.Unbind();
 	}
 }

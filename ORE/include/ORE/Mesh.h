@@ -31,6 +31,8 @@ namespace ORE {
 		Material* Material;
 		glm::mat4 ModelMatrix;
 
+		GLenum RenderMode = GL_TRIANGLES;
+
 		// Hopefully accurate
 		bool operator==(const Mesh& rhs) {
 			if (rhs.GetConstVBO().GetVertices() == this->GetVBO().GetVertices())

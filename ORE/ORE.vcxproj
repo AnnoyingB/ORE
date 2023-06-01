@@ -19,6 +19,7 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ORE</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -76,7 +77,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor;include\ORE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor;include\ORE;..\OREML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -88,7 +89,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>glfw3.lib;glfw3_mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\libs;..\OREML\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -96,7 +97,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor;include\ORE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor;include\ORE;..\OREML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -112,7 +113,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>glfw3.lib;glfw3_mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\libs;..\OREML\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ExecTest|x64'">
@@ -120,7 +121,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor;include\ORE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor;include\ORE;..\OREML\include;../OREML/vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -129,8 +130,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glfw3_mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glfw3_mt.lib;zlibstatic.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\libs;..\OREML\vendor\bin;..\OREML\vendor\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -142,8 +143,10 @@
     <ClInclude Include="include\ORE\Camera.h" />
     <ClInclude Include="include\ORE\Debugging.h" />
     <ClInclude Include="include\ORE\Lighting\DirectionalLight.h" />
+    <ClInclude Include="include\ORE\Lighting\PointLight.h" />
     <ClInclude Include="include\ORE\Material.h" />
     <ClInclude Include="include\ORE\Mesh.h" />
+    <ClInclude Include="include\ORE\Objects\Billboard.h" />
     <ClInclude Include="include\ORE\Objects\Sprite2D.h" />
     <ClInclude Include="include\ORE\Renderer.h" />
     <ClInclude Include="include\ORE\Shader.h" />
@@ -592,6 +595,7 @@
     <ClCompile Include="src\Lighting\DirectionalLight.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\Objects\Billboard.cpp" />
     <ClCompile Include="src\Objects\Sprite2D.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
@@ -600,6 +604,21 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="vendor\glad\glad.c" />
     <ClCompile Include="vendor\glm\detail\glm.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OREML\OREML.vcxproj">
+      <Project>{C4B6C20D-30CB-EABE-F94C-8E1E6520E7EF}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\ORE\Shaders\BillboardShader.frag" />
+    <None Include="include\ORE\Shaders\BillboardShader.vert" />
+    <None Include="include\ORE\Shaders\PBRShader.frag" />
+    <None Include="include\ORE\Shaders\PBRShader.vert" />
+    <None Include="include\ORE\Shaders\CubeMap.frag" />
+    <None Include="include\ORE\Shaders\CubeMap.vert" />
+    <None Include="include\ORE\Shaders\SkyBoxShader.frag" />
+    <None Include="include\ORE\Shaders\SkyBoxShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,6 @@
 #pragma once
 #include "glad/glad.h"
 #include "glm/glm.hpp"
-#include "stb_image.h"
 #include <string>
 
 namespace ORE {
@@ -34,17 +33,20 @@ namespace ORE {
 		Texture2DArray = GL_TEXTURE_2D_ARRAY,
 		Texture3D = GL_TEXTURE_3D,
 		Texture3DArray = GL_TEXTURE_2D_ARRAY,
+		CubeMap = GL_TEXTURE_CUBE_MAP,
 	};
 
 	struct TextureCreateInfo {
 		std::string texturePath;
 
-		Filter filterMin, filterMag;// Use either Filters or MipMaps (you cannot use both)
-		Repeating repeatS, repeatT;
-		MipMaps mipmapsMin, mipmapsMag; // Use either MipMaps or Filters (you cannot use both)
-		TextureType textureType;
+		Filter filterMin = NoFilter, filterMag = NoFilter;// Use either Filters or MipMaps (you cannot use both)
+		Repeating repeatS = NoRepeat, repeatT = NoRepeat, repeatR = NoRepeat;
+		MipMaps mipmapsMin = NoMipMaps, mipmapsMag = NoMipMaps; // Use either MipMaps or Filters (you cannot use both)
+		TextureType textureType = Texture2D;
+		GLuint textureFormat = GL_RGBA, internalFormat = GL_RGBA;
 		glm::vec4 borderCol = glm::vec4(0, 0, 0, 0); // If you are using ClampToBorder, set this.
 		int depth; // If you are not using a 3d texture don't worry about this.
+		bool flip = false;
 	};
 
 	class Texture {
@@ -57,7 +59,11 @@ namespace ORE {
 
 		virtual ~Texture();
 
-		void Bind();
-		void Unbind();
+		void Bind() const;
+		void Unbind() const;
+
+		operator unsigned int() const {
+			return textureID;
+		}
 	};
 }

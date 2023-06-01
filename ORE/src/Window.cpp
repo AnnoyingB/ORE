@@ -1,6 +1,7 @@
 #include "orepch.h"
 #include "Window.h"
 #include "glad/glad.h"
+#include "Renderer.h"
 
 namespace ORE {
 	void ErrorCallback(int code, const char* description) {
@@ -11,11 +12,13 @@ namespace ORE {
 	{
 		if (type == GL_DEBUG_TYPE_ERROR)
 		{
-			printf("GL: DEBUG CALLBACK type = {}, severity = error, message = {}\n", type, message);
-			assert(false);
+			printf("GL: DEBUG CALLBACK type = %i, source = %i, severity = error, message = %s\n", type, source, message);
 		}
 	}
 
+	void WindowSizeCallback(GLFWwindow* window, int width, int height) {
+		glViewport(0, 0, width, height);
+	}
 
 	Window::~Window() {
 		if (!init) return;
@@ -47,6 +50,7 @@ namespace ORE {
 			assert(window && "Failed to create GLFW window");
 			
 			glfwMakeContextCurrent(window);
+			Renderer::Init(window);
 			return true;
 		}
 
@@ -54,6 +58,7 @@ namespace ORE {
 		assert(window && "Failed to create GLFW window");
 		
 		glfwMakeContextCurrent(window);
+		Renderer::Init(window);
 		return true;
 	}
 
@@ -63,8 +68,11 @@ namespace ORE {
 			std::cout << "Failed to initialize GLAD" << std::endl;
 			return false;
 		}
+		glEnable(GL_DEBUG_OUTPUT);
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 		glDebugMessageCallback(DebugMessageCallback, nullptr);
+
+		SetSizeCallback(WindowSizeCallback);
 
 		return true;
 	}

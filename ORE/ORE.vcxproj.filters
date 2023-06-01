@@ -10,6 +10,9 @@
     <Filter Include="include\ORE\Buffers">
       <UniqueIdentifier>{3A0ABD36-A66B-9A44-2FD9-E0F69B39D103}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\ORE\Lighting">
+      <UniqueIdentifier>{0336B7AF-EFC4-4079-98E3-54748451511F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\ORE\Objects">
       <UniqueIdentifier>{77E967F3-E34A-4501-6CB8-8BB3D8187CC0}</UniqueIdentifier>
     </Filter>
@@ -18,6 +21,9 @@
     </Filter>
     <Filter Include="src\Buffers">
       <UniqueIdentifier>{A947D8FD-15FD-50F3-9EF1-4ACA0AA647F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Lighting">
+      <UniqueIdentifier>{52213A5A-3E84-C9FE-E709-02B5D34B9581}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Objects">
       <UniqueIdentifier>{E62683BA-52DC-FBAF-DBD0-F5864785F2B3}</UniqueIdentifier>
@@ -74,6 +80,12 @@
     </ClInclude>
     <ClInclude Include="include\ORE\Debugging.h">
       <Filter>include\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ORE\Lighting\DirectionalLight.h">
+      <Filter>include\ORE\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ORE\Lighting\PointLight.h">
+      <Filter>include\ORE\Lighting</Filter>
     </ClInclude>
     <ClInclude Include="include\ORE\Material.h">
       <Filter>include\ORE</Filter>
@@ -1392,7 +1404,7 @@
     <ClInclude Include="vendor\stb_image.h">
       <Filter>vendor</Filter>
     </ClInclude>
-    <ClInclude Include="include\ORE\Lighting\DirectionalLight.h" />
+    <ClInclude Include="include\ORE\Objects\Billboard.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Buffers\Buffer.cpp">
@@ -1412,6 +1424,9 @@
     </ClCompile>
     <ClCompile Include="src\Camera.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Lighting\DirectionalLight.cpp">
+      <Filter>src\Lighting</Filter>
     </ClCompile>
     <ClCompile Include="src\Material.cpp">
       <Filter>src</Filter>
@@ -1443,6 +1458,16 @@
     <ClCompile Include="vendor\glm\detail\glm.cpp">
       <Filter>vendor\glm\detail</Filter>
     </ClCompile>
-    <ClCompile Include="src\Lighting\DirectionalLight.cpp" />
+    <ClCompile Include="src\Objects\Billboard.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\ORE\Shaders\PBRShader.frag" />
+    <None Include="include\ORE\Shaders\PBRShader.vert" />
+    <None Include="include\ORE\Shaders\CubeMap.vert" />
+    <None Include="include\ORE\Shaders\CubeMap.frag" />
+    <None Include="include\ORE\Shaders\SkyBoxShader.vert" />
+    <None Include="include\ORE\Shaders\SkyBoxShader.frag" />
+    <None Include="include\ORE\Shaders\BillboardShader.vert" />
+    <None Include="include\ORE\Shaders\BillboardShader.frag" />
   </ItemGroup>
 </Project>

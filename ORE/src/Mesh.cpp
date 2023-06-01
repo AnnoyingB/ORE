@@ -47,6 +47,7 @@ namespace ORE {
 		Material->GetConstShader().SetMat4("projection", camera.GetProjection());
 		Material->GetConstShader().SetMat4("view", camera.GetView());
 		Material->GetConstShader().SetMat4("model", ModelMatrix);
+		Material->GetConstShader().SetMat3("normalMatrix", glm::transpose(glm::inverse(ModelMatrix)));
 	}
 
 	void Mesh::Draw(Camera cam) {
@@ -54,11 +55,11 @@ namespace ORE {
 		m_vao->Bind();
 		Material->GetConstShader().Bind();
 		GLCheckError();
-		Apply(cam);
+		//Apply(cam);
 		GLCheckError();
 		m_ibo->Bind();
 		
-		glDrawElements(GL_TRIANGLES, m_ibo->GetConstIndices().size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(RenderMode, m_ibo->GetConstIndices().size(), GL_UNSIGNED_INT, 0);
 		GLCheckError();
 
 		m_ibo->Unbind();

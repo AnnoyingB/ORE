@@ -1,16 +1,18 @@
 #pragma once
 #include "Lighting/DirectionalLight.h"
+#include "Lighting/PointLight.h"
 #include "Shader.h"
+#include "Camera.h"
 
 namespace ORE {
 	class Material {
 	private:
 		Shader* m_shader;
 	public:
-		glm::vec3 diffuse;
-		glm::vec3 specular;
-		glm::vec3 ambient;
-		float shininess;
+		glm::vec3 albedo;
+		float metallic;
+		float roughness;
+		float ao;
 
 		Material() = default;
 		Material(std::string);
@@ -22,5 +24,6 @@ namespace ORE {
 
 		void UpdateLighting();
 		void Apply();
+		void SetMatrices(const Camera& cam, glm::mat4 modelMatrix);
 	};
 }

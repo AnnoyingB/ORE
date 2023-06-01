@@ -30,14 +30,16 @@ project "OREML"
 
 	files { "OREML/**.h", "OREML/**.c", "OREML/**.cpp", "OREML/**.inl", "OREML/**.hpp" }
 
-	includedirs { "OREML/vendor/assimp/include", "OREML/include/OREML" }
-	links { "assimp.dll" }
+	includedirs { "OREML/vendor", "OREML/include/OREML", "ORE/include", "ORE/vendor" }
+	links { "assimp.lib", "zlibstatic.lib" }
 
-	filter "configurations:Debug"
+	filter "configurations:Debug or configurations:ExecTest"
+		libdirs { "OREML/vendor/bin/Debug" }
 		defines { "DEBUG" }
 		symbols "On"
 	
 	filter "configurations:Release"
+		libdirs { "OREML/vendor/bin/Release" }
 		defines { "NDEBUG" }
 		optimize "On"
 	filter {}
@@ -65,9 +67,9 @@ project "ORE"
 	}
 
 	filter "options:extensions=oreml"
-		includedirs { "OREML/include" }
-		libdirs { "OREML/x64/Debug" }
-		links { "OREML.lib" }
+		includedirs { "OREML/include", "OREML/vendor" }
+		libdirs { "OREML/vendor/bin" }
+		links { "OREML" }
 
 	filter "configurations:Debug or configurations:ExecTest"
       defines { "DEBUG" }

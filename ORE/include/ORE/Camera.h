@@ -18,8 +18,9 @@ namespace ORE {
 		Camera() = default;
 
 		void SetAspect(glm::vec2 size);
-		glm::mat4 GetProjection();
-		glm::mat4 GetView(glm::vec3 upVector = glm::vec3(0, 1, 0));
+		glm::mat4 GetProjection() const;
+		glm::mat4 GetView(glm::vec3 upVector = glm::vec3(0, 1, 0)) const;
+		glm::vec3 GetForwardVec() const;
 
 		// Screen -> World
 		// World -> Screen

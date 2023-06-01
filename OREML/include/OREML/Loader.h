@@ -5,14 +5,13 @@
 
 #include <vector>
 
-// who cares about compiler includes these days
-#include "ORE/Mesh.h"
-#include "../../../ORE/vendor/glm/glm.hpp"
+#include "Mesh.h"
+#include "glm/glm.hpp"
 
 namespace OREML {
-	static class Loader {
+	class Loader {
 	private:
-		static Assimp::Importer importer;
+		static Assimp::Importer* importer;
 	public:
 		static std::vector<ORE::MeshCreateInfo> Load(std::string_view path, unsigned int flags = -1);
 		static ORE::MeshCreateInfo ParseMesh(aiMesh* mesh);

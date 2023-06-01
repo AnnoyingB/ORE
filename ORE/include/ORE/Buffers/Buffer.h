@@ -14,5 +14,9 @@ namespace ORE {
 		virtual void Bind();
 		virtual void Unbind();
 		virtual void ChangeData(void* data);
+
+		operator unsigned int() const {
+			return bufferID;
+		}
 	};
 }
