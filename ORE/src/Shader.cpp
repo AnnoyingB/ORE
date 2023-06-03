@@ -7,6 +7,7 @@ namespace ORE {
 	inline const std::string Shader::CubeMapShader = Shader::OREShaders + "CubeMap";
 	inline const std::string Shader::SkyBoxShader = Shader::OREShaders + "SkyBoxShader";
 	inline const std::string Shader::BillboardShader = Shader::OREShaders + "BillboardShader";
+	inline const std::string Shader::TextShader = Shader::OREShaders + "TextShader";
 
 	Shader::Shader(std::string shaderPath) {
 		shaderID = -1;

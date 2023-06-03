@@ -13,7 +13,7 @@ namespace ORE {
 	private:
 		Texture* billboardTexture;
 	public:
-		Billboard(const std::string& texPath, MeshCreateInfo mci)
+		Billboard(const std::string& texPath, bool flip, MeshCreateInfo mci)
 			: Mesh(mci) {
 			TextureCreateInfo tci;
 			tci.texturePath = texPath;
@@ -22,6 +22,9 @@ namespace ORE {
 			tci.filterMag = Linear;
 			tci.repeatS = ClampToEdge;
 			tci.repeatT = ClampToEdge;
+			tci.textureFormat = GL_RGBA;
+			tci.internalFormat = GL_RGBA;
+			tci.flip = flip;
 
 			billboardTexture = new Texture(tci);
 			//glActiveTexture(GL_TEXTURE1);
@@ -31,6 +34,6 @@ namespace ORE {
 
 		void Scale(bool); // if false(default) it will not scale to be the same size on screen
 		void Update();
-		void Render();
+		void Draw(Camera camera) override;
 	};
 }

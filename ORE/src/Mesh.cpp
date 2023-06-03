@@ -1,5 +1,6 @@
 #include "orepch.h"
 #include "Mesh.h"
+#include "glm/gtx/quaternion.hpp"
 
 namespace ORE {
 	Mesh::Mesh(MeshCreateInfo meshInfo) {
@@ -43,7 +44,15 @@ namespace ORE {
 			delete Material;
 	}
 
+	void Mesh::CreateMatrix() {
+		auto r = glm::mat4_cast(glm::quat(Rotation));
+		auto t = glm::translate(glm::mat4(1.f), Position);
+		auto s = glm::scale(glm::mat4(1.f), Scale);
+		ModelMatrix = t * r * s;
+	}
+
 	void Mesh::Apply(Camera camera) {
+		CreateMatrix();
 		Material->GetConstShader().SetMat4("projection", camera.GetProjection());
 		Material->GetConstShader().SetMat4("view", camera.GetView());
 		Material->GetConstShader().SetMat4("model", ModelMatrix);

@@ -16,7 +16,7 @@ uniform mat3 normalMatrix;
 void main()
 {
     gl_Position = projection * view * model * vec4(aPos, 1.0f);
-    WorldPos = vec3(model * vec4(aPos, 1.0f));
+    WorldPos = vec3(model * vec4(aPos, 1.0));
     VertexCol = aCol;
-    Normal = normalMatrix * aNorm;//mat3(transpose(inverse(model))) * aNorm;
+    Normal = normalMatrix * aNorm;
 }

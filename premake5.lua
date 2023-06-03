@@ -30,7 +30,8 @@ project "OREML"
 
 	files { "OREML/**.h", "OREML/**.c", "OREML/**.cpp", "OREML/**.inl", "OREML/**.hpp" }
 
-	includedirs { "OREML/vendor", "OREML/include/OREML", "ORE/include", "ORE/vendor" }
+	includedirs { "OREML/vendor", "OREML/include/OREML", "ORE/include/ORE", "ORE/vendor" }
+	libdirs { "OREML/vendor/bin" }
 	links { "assimp.lib", "zlibstatic.lib" }
 
 	filter "configurations:Debug or configurations:ExecTest"
@@ -62,19 +63,22 @@ project "ORE"
 	libdirs { "ORE/vendor/libs" }
 	links
 	{
+		"freetyped.lib",
 		"glfw3.lib",
 		"glfw3_mt.lib",
 	}
 
 	filter "options:extensions=oreml"
 		includedirs { "OREML/include", "OREML/vendor" }
-		libdirs { "OREML/vendor/bin" }
-		links { "OREML" }
+		libdirs { "OREML/vendor/", "OREML/vendor/bin" }
+		links { "OREML", "zlibstatic.lib" }
 
 	filter "configurations:Debug or configurations:ExecTest"
-      defines { "DEBUG" }
-      symbols "On"
+		libdirs { "ORE/vendor/libs/Debug" }
+		defines { "DEBUG" }
+		symbols "On"
 
     filter "configurations:Release"
-      defines { "NDEBUG" }
-      optimize "On"
+		libdirs { "ORE/vendor/libs/Release" }
+		defines { "NDEBUG" }
+		optimize "On"

@@ -22,6 +22,7 @@ namespace ORE {
 		static const std::string CubeMapShader;
 		static const std::string SkyBoxShader;
 		static const std::string BillboardShader;
+		static const std::string TextShader;
 
 		// please do not actually use this.
 		Shader() = default;

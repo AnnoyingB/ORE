@@ -5,7 +5,6 @@
 #include "Lighting/PointLight.h"
 
 namespace ORE {
-	inline std::vector<Billboard*> Renderer::RenderableBillboards = std::vector<Billboard*>();
 	inline std::vector<Mesh*> Renderer::RenderableMeshes = std::vector<Mesh*>();
 	inline Framebuffer* Renderer::CurrentFramebuffer = nullptr;
 	inline Skybox* Renderer::CurrentSkybox = nullptr;
@@ -27,6 +26,9 @@ namespace ORE {
 		CurrentCamera.Fovy = 90;
 
 		CurrentWindow = window;
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	Mesh* Renderer::CreateMesh(MeshCreateInfo MCI) {
@@ -51,7 +53,7 @@ namespace ORE {
 		return skybox;
 	}
 
-	Billboard* Renderer::CreateBillboard(const std::string& texPath) {
+	Billboard* Renderer::CreateBillboard(const std::string& texPath, bool flip, bool render) {
 		MeshCreateInfo mci;
 		mci.vertices.push_back({ glm::vec3(SquareVertices[0], 0), { 1.f, 1.f, 1.f, 1.f }, {0.f, 0.f, 1.f}, {0, 1, 0} });
 		mci.vertices.push_back({ glm::vec3(SquareVertices[1], 0), { 1.f, 1.f, 1.f, 1.f }, {0.f, 0.f, 1.f}, {1, 1, 0} });
@@ -60,8 +62,9 @@ namespace ORE {
 		mci.indices = { 0, 1, 2, 2, 3, 0 };
 		mci.shaderPath = Shader::BillboardShader;
 
-		Billboard* billboard = new Billboard(texPath, mci);
-		RenderableBillboards.push_back(billboard);
+		Billboard* billboard = new Billboard(texPath, flip, mci);
+		if(render)
+			RenderableMeshes.push_back(billboard);
 		return billboard;
 	}
 
@@ -112,8 +115,11 @@ namespace ORE {
 			enabledStickyKeys = false;
 		}
 
-		if (CurrentSkybox)
+		if (CurrentSkybox) {
 			CurrentSkybox->DrawSkybox();
+			CurrentSkybox->envCubemap->Bind();
+			RenderCalls++;
+		}
 		if (CurrentFramebuffer)
 			CurrentFramebuffer->Bind();
 		for (Mesh* mesh : RenderableMeshes) {
@@ -121,11 +127,6 @@ namespace ORE {
 			mesh->GetConstShader().SetVec3("camPos", CurrentCamera.Position);
 			mesh->Apply(CurrentCamera);
 			mesh->Draw(CurrentCamera);
-			RenderCalls++;
-		}
-		for (Billboard* billboard : RenderableBillboards) {
-			billboard->GetConstShader().Bind();
-			billboard->Render();
 			RenderCalls++;
 		}
 		if (CurrentFramebuffer)

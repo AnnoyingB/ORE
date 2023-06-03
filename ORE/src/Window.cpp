@@ -50,7 +50,6 @@ namespace ORE {
 			assert(window && "Failed to create GLFW window");
 			
 			glfwMakeContextCurrent(window);
-			Renderer::Init(window);
 			return true;
 		}
 
@@ -58,7 +57,6 @@ namespace ORE {
 		assert(window && "Failed to create GLFW window");
 		
 		glfwMakeContextCurrent(window);
-		Renderer::Init(window);
 		return true;
 	}
 
@@ -73,6 +71,8 @@ namespace ORE {
 		glDebugMessageCallback(DebugMessageCallback, nullptr);
 
 		SetSizeCallback(WindowSizeCallback);
+
+		Renderer::Init(window);
 
 		return true;
 	}

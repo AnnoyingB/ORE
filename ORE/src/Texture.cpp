@@ -16,46 +16,53 @@ namespace ORE {
 
 		int width, height;
 		int channels;
-		stbi_set_flip_vertically_on_load(createInfo.flip);
-		unsigned char* imageData = stbi_load(createInfo.texturePath.c_str(), &width, &height, &channels, 4);
-		stbi_set_flip_vertically_on_load(false);
+		if (!createInfo.loadWithFloat) {
+			stbi_set_flip_vertically_on_load(createInfo.flip);
+			unsigned char* imageData = stbi_load(createInfo.texturePath.c_str(), &width, &height, &channels, 4);
+			stbi_set_flip_vertically_on_load(false);
 
-		if (!imageData && createInfo.textureType != CubeMap) {
-			std::cout << "Failed to load stbi image: " << stbi_failure_reason() << std::endl;
-			assert(false);
-			return;
+			if (!imageData && createInfo.textureType != CubeMap) {
+				std::cout << "Failed to load stbi image: " << stbi_failure_reason() << std::endl;
+				assert(false);
+				return;
+			}
+			
+			if (createInfo.textureType == Texture1D || createInfo.textureType == Texture1DArray)
+				glTexImage1D(createInfo.textureType, 0, createInfo.textureFormat, width, height, 0, GL_UNSIGNED_BYTE, imageData);
+			else if (createInfo.textureType == Texture2D || createInfo.textureType == Texture2DArray)
+				glTexImage2D(createInfo.textureType, 0, createInfo.textureFormat, width, height, 0, createInfo.internalFormat, GL_UNSIGNED_BYTE, imageData);
+			else if (createInfo.textureType == Texture3D || createInfo.textureType == Texture2DArray)
+				glTexImage3D(createInfo.textureType, 0, createInfo.textureFormat, width, height, createInfo.depth, 0, createInfo.internalFormat, GL_UNSIGNED_BYTE, imageData);
+			stbi_image_free(imageData);
+		} else {
+			stbi_set_flip_vertically_on_load(createInfo.flip);
+			float* imageData = stbi_loadf(createInfo.texturePath.c_str(), &width, &height, &channels, 4);
+			stbi_set_flip_vertically_on_load(false);
+
+			if (!imageData && createInfo.textureType != CubeMap) {
+				std::cout << "Failed to load stbi image: " << stbi_failure_reason() << std::endl;
+				assert(false);
+				return;
+			}
+
+			if (createInfo.textureType == CubeMap) {
+				for (unsigned int i = 0; i < 6; ++i)
+				{
+					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA16F,
+						512, 512, 0, GL_RGBA, GL_FLOAT, nullptr);
+				}
+			}
+			else if (createInfo.textureType == Texture1D || createInfo.textureType == Texture1DArray)
+				glTexImage1D(createInfo.textureType, 0, createInfo.textureFormat, width, height, 0, GL_FLOAT, imageData);
+			else if (createInfo.textureType == Texture2D || createInfo.textureType == Texture2DArray)
+				glTexImage2D(createInfo.textureType, 0, createInfo.textureFormat, width, height, 0, createInfo.internalFormat, GL_FLOAT, imageData);
+			else if (createInfo.textureType == Texture3D || createInfo.textureType == Texture2DArray)
+				glTexImage3D(createInfo.textureType, 0, createInfo.textureFormat, width, height, createInfo.depth, 0, createInfo.internalFormat, GL_FLOAT, imageData);
+			stbi_image_free(imageData);
 		}
-
-		if (createInfo.textureType == Texture1D || createInfo.textureType == Texture1DArray)
-			glTexImage1D(createInfo.textureType, 0, createInfo.textureFormat, width, height, 0, GL_UNSIGNED_BYTE, imageData);
-		else if (createInfo.textureType == Texture2D || createInfo.textureType == Texture2DArray)
-			glTexImage2D(createInfo.textureType, 0, createInfo.textureFormat, width, height, 0, createInfo.internalFormat, GL_UNSIGNED_BYTE, imageData);
-		else if (createInfo.textureType == Texture3D || createInfo.textureType == Texture2DArray)
-			glTexImage3D(createInfo.textureType, 0, createInfo.textureFormat, width, height, createInfo.depth, 0, createInfo.internalFormat, GL_UNSIGNED_BYTE, imageData);
 
 		if (createInfo.mipmapsMin != NoMipMaps || createInfo.mipmapsMag != NoMipMaps)
 			glGenerateMipmap(createInfo.textureType);
-
-		if (createInfo.textureType == CubeMap) {
-			GLCheckError();
-			const char* faces[6] = { "right.png",
-				"left.png",
-				"top.png",
-				"bottom.png",
-				"front.png",
-				"back.png" };
-			// every face of the cube
-			for (int i = 0; i < 6; i++) {
-				unsigned char* data = stbi_load(faces[i], &width, &height, &channels, 4);
-				assert(data);
-
-				// note that we store each face with 16 bit floating point values
-				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, createInfo.textureFormat,
-					width, height, 0, createInfo.internalFormat, GL_UNSIGNED_BYTE, data);
-				stbi_image_free(data);
-			}
-			GLCheckError();
-		}
 
 		GLCheckError();
 
@@ -87,8 +94,6 @@ namespace ORE {
 		GLCheckError();
 
 		glBindTexture(createInfo.textureType, 0);
-
-		stbi_image_free(imageData);
 
 		textureType = createInfo.textureType;
 	}

@@ -6,8 +6,8 @@
 namespace ORE {
 	enum Filter {
 		NoFilter = GL_NONE,
-		Nearest = GL_NEAREST,
-		Linear = GL_LINEAR,
+		Nearest = GL_NEAREST, // Pixelated
+		Linear = GL_LINEAR,   // Blurred
 	};
 
 	enum Repeating {
@@ -47,6 +47,7 @@ namespace ORE {
 		glm::vec4 borderCol = glm::vec4(0, 0, 0, 0); // If you are using ClampToBorder, set this.
 		int depth; // If you are not using a 3d texture don't worry about this.
 		bool flip = false;
+		bool loadWithFloat = false;
 	};
 
 	class Texture {

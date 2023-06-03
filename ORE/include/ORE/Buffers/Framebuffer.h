@@ -6,7 +6,7 @@ namespace ORE {
 	class Framebuffer;
 
 	struct Skybox {
-		//Framebuffer* skyboxFBO;
+		Framebuffer* skyboxFBO;
 		Mesh* skybox;
 		Shader* skyBoxShader;
 		Texture *hdrTexture, *envCubemap;
@@ -38,6 +38,6 @@ namespace ORE {
 		int ReadPixelID(int x, int y);
 
 		// Only if you are using a cube map
-		void SetupCubeMap(Skybox&);
+		void DrawSkybox(Skybox&);
 	};
 }

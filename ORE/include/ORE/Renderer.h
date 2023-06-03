@@ -10,7 +10,6 @@ namespace ORE {
 		static bool enabledStickyKeys;
 		static glm::vec<2, double, glm::defaultp> oldMousePos;
 	public:
-		static std::vector<Billboard*> RenderableBillboards;
 		static std::vector<Mesh*> RenderableMeshes;
 		static Framebuffer* CurrentFramebuffer;
 		static Skybox* CurrentSkybox;
@@ -31,7 +30,7 @@ namespace ORE {
 		static Mesh* CreateMesh(MeshCreateInfo MCI);
 		static PointLight* CreatePointLight();
 		static Skybox* CreateSkybox(const std::string& hdr, Mesh* skyboxMesh);
-		static Billboard* CreateBillboard(const std::string& texPath);
+		static Billboard* CreateBillboard(const std::string& texPath, bool flip = false,  bool render = true);
 		static void Cleanup();
 		static void RenderMeshes();
 	};

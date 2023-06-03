@@ -17,9 +17,10 @@ namespace ORE {
 		Material->GetShader().SetVec3("billboardPos", ModelMatrix[3]);
 	}
 
-	void Billboard::Render() {
+	void Billboard::Draw(Camera cam) {
+		CreateMatrix();
 		billboardTexture->Bind();
 		Update();
-		Draw(Renderer::CurrentCamera);
+		Mesh::Draw(cam);
 	}
 }

@@ -30,6 +30,9 @@ namespace ORE {
 
 		Material* Material;
 		glm::mat4 ModelMatrix;
+		glm::vec3 Position = glm::vec3(0);
+		glm::vec3 Scale = glm::vec3(1);
+		glm::vec3 Rotation = glm::vec3(0);
 
 		GLenum RenderMode = GL_TRIANGLES;
 
@@ -95,6 +98,7 @@ namespace ORE {
 
 		virtual void Draw(Camera cam);
 
+		void CreateMatrix();
 		void Apply(Camera camera);
 		void SetID(int id);
 	};

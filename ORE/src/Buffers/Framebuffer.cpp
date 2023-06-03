@@ -4,38 +4,47 @@
 
 namespace ORE {
 	Skybox::Skybox(const std::string& hdrPath, Mesh* skyboxMesh) {
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+		glEnable(GL_FRAMEBUFFER_SRGB);
+
 		skybox = skyboxMesh;
 
-		/*FrameBufferCreateInfo fbci;
-		fbci.width = 512;
-		fbci.height = 512;
+		FrameBufferCreateInfo fbci;
+		fbci.width = 1280;
+		fbci.height = 720;
 		fbci.internalDepthFormat = GL_DEPTH_COMPONENT24;
 		fbci.attatchment = GL_DEPTH_ATTACHMENT;
 
 		skyboxFBO = new Framebuffer(fbci);
-		GLCheckError();*/
+		GLCheckError();
 
 		TextureCreateInfo tci;
 		tci.repeatS = ClampToEdge;
 		tci.repeatT = ClampToEdge;
 		tci.filterMin = Linear;
 		tci.filterMag = Linear;
-		//tci.texturePath = hdrPath;
-		//tci.flip = true;
+		tci.texturePath = hdrPath;
+		tci.flip = true;
+		tci.loadWithFloat = true;
+		tci.textureFormat = GL_RGBA16F;
+		//tci.textureFormat = GL_SRGB;
+		tci.internalFormat = GL_RGBA;
 
-		//Texture* hdrTex = new Texture(tci);
+		Texture* hdrTex = new Texture(tci);
 
-		//GLCheckError();
+		GLCheckError();
 
 		tci.repeatR = ClampToEdge;
 		tci.textureType = CubeMap;
-		//tci.textureFormat = GL_RGB;
-		//tci.internalFormat = GL_RGB;
+		tci.textureFormat = GL_RGBA16F;
+		//tci.textureFormat = GL_SRGB;
+		tci.internalFormat = GL_RGBA;
 
 		Texture* envTex = new Texture(tci);
 
 		skyBoxShader = new Shader(Shader::SkyBoxShader);
-		//hdrTexture = hdrTex;
+		hdrTexture = hdrTex;
 		envCubemap = envTex;
 
 		GLCheckError();
@@ -45,22 +54,7 @@ namespace ORE {
 	}
 
 	void Skybox::DrawSkybox() {
-		glDepthMask(GL_FALSE);
-
-		GLCheckError();
-		Shader& skyBoxShader = skybox->GetShader();
-		GLCheckError();
-		glm::mat4 view = glm::mat4(glm::mat3(Renderer::CurrentCamera.GetView()));
-		skyBoxShader.SetMat4("view", view);
-		GLCheckError();
-		skyBoxShader.SetMat4("projection", Renderer::CurrentCamera.GetProjection());
-		GLCheckError();
-		glActiveTexture(GL_TEXTURE0);
-		envCubemap->Bind();
-		GLCheckError();
-
-		skybox->Draw(Renderer::CurrentCamera); // renders a 1x1x1 cube
-		glDepthMask(GL_TRUE);
+		skyboxFBO->DrawSkybox(*this);
 	}
 
 	Framebuffer::Framebuffer(FrameBufferCreateInfo fboi, bool rbo) {
@@ -138,10 +132,9 @@ namespace ORE {
 		return id;
 	}
 	
-	void Framebuffer::SetupCubeMap(Skybox& skybox) {
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
+	void Framebuffer::DrawSkybox(Skybox& skybox) {
 		GLCheckError();
+
 		glm::mat4 captureViews[] =
 		{
 		   glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
@@ -153,26 +146,22 @@ namespace ORE {
 		};
 
 		// convert HDR equirectangular environment map to cubemap equivalent
-		Shader& cubemapShader = skybox.skybox->GetShader();
-		cubemapShader.Bind();
-		cubemapShader.SetInt("equirectangularMap", 0);
-		cubemapShader.SetMat4("projection", glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f));
+		skybox.skyBoxShader->Bind();
+		skybox.skyBoxShader->SetMat4("projection", Renderer::CurrentCamera.GetProjection());
 		glActiveTexture(GL_TEXTURE0);
 		skybox.hdrTexture->Bind();
-		GLCheckError();
 
-		glViewport(0, 0, 512, 512); // don't forget to configure the viewport to the capture dimensions.
+		glViewport(0, 0, 1280, 720); // don't forget to configure the viewport to the capture dimensions.
 		Bind();
 		for (unsigned int i = 0; i < 6; ++i)
 		{
-			cubemapShader.Bind();
-			cubemapShader.SetMat4("view", captureViews[i]);
+			skybox.skyBoxShader->SetMat4("view", captureViews[i]);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
 				GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, *skybox.envCubemap, 0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
+		skybox.skybox->Draw(Renderer::CurrentCamera);
 		Unbind();
-		GLCheckError();
 	}
 
 	Framebuffer::~Framebuffer() {
