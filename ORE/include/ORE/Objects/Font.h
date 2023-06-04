@@ -24,6 +24,7 @@ namespace ORE {
 		VertexArray* vao;
 		VertexBuffer* vbo;
 		Shader* textShader;
+		float fontHeight;
 	public:
 		static FT_Library ft;
 		std::unordered_map<char, Character> Characters = std::unordered_map<char, Character>();
@@ -32,6 +33,6 @@ namespace ORE {
 		Font(const std::string& fontAtlas, int fontHeight, int characters = 128);
 		virtual ~Font();
 
-		void RenderText(const std::string& text, glm::vec2 pos, float scale, glm::vec3 color = glm::vec3(1.f, 1.f, 1.f));
+		void RenderText(const std::string& text, glm::vec2 pos, float fontSize, glm::vec3 color = glm::vec3(1.f, 1.f, 1.f));
 	};
 }

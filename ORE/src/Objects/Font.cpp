@@ -70,10 +70,12 @@ namespace ORE {
         vao->Unbind();
 
         textShader = new Shader(Shader::TextShader);
+        this->fontHeight = fontHeight;
 	}
     
-    void Font::RenderText(const std::string& text, glm::vec2 pos, float scale, glm::vec3 color)
+    void Font::RenderText(const std::string& text, glm::vec2 pos, float fontSize, glm::vec3 color)
     {
+        float scale = fontSize / fontHeight;
         glDisable(GL_DEPTH_TEST);
         // activate corresponding render state	
         textShader->Bind();

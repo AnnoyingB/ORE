@@ -66,7 +66,7 @@ int main() {
 		window.ClearColor(1, 0, 0, 1);
 
 		ORE::Renderer::RenderMeshes();
-		font->RenderText("Hello World!", { 0, 0 }, .001f);
+		font->RenderText("Hello World!", { 0, 0 }, 0.1);
 		pointLight->RenderBillboard();
 
 		window.Poll();
