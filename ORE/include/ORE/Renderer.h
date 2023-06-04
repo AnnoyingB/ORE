@@ -19,6 +19,7 @@ namespace ORE {
 		static bool CameraMovement; // WASDEQ
 		static float CameraSpeed;
 		static float CameraSensitivity;
+		static glm::vec2 UISize; // Will not change depending on screen size (default - 1280x720)
 
 		enum RT {
 			None = 0,

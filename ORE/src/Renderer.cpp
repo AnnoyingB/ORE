@@ -5,17 +5,18 @@
 #include "Lighting/PointLight.h"
 
 namespace ORE {
-	inline std::vector<Mesh*> Renderer::RenderableMeshes = std::vector<Mesh*>();
-	inline Framebuffer* Renderer::CurrentFramebuffer = nullptr;
-	inline Skybox* Renderer::CurrentSkybox = nullptr;
-	inline Camera Renderer::CurrentCamera = Camera();
-	inline GLFWwindow* Renderer::CurrentWindow = nullptr;
-	inline int Renderer::RenderCalls = 0;
-	inline bool Renderer::CameraMovement = false;
-	inline bool Renderer::enabledStickyKeys = false;
-	inline glm::vec<2, double, glm::defaultp> Renderer::oldMousePos = glm::vec<2, double, glm::defaultp>(0);
-	inline float Renderer::CameraSpeed = .05f;
-	inline float Renderer::CameraSensitivity = .1f;
+	std::vector<Mesh*> Renderer::RenderableMeshes = std::vector<Mesh*>();
+	Framebuffer* Renderer::CurrentFramebuffer = nullptr;
+	Skybox* Renderer::CurrentSkybox = nullptr;
+	Camera Renderer::CurrentCamera = Camera();
+	GLFWwindow* Renderer::CurrentWindow = nullptr;
+	int Renderer::RenderCalls = 0;
+	bool Renderer::CameraMovement = false;
+	bool Renderer::enabledStickyKeys = false;
+	glm::vec<2, double, glm::defaultp> Renderer::oldMousePos = glm::vec<2, double, glm::defaultp>(0);
+	float Renderer::CameraSpeed = .05f;
+	float Renderer::CameraSensitivity = .1f;
+	glm::vec2 Renderer::UISize = glm::vec2(1280, 720);
 
 	void Renderer::Init(GLFWwindow* window) {
 		CurrentCamera.Position = glm::vec3(0.f, 0.f, 5.f);

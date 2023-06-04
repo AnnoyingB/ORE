@@ -71,6 +71,9 @@ namespace ORE {
 
         textShader = new Shader(Shader::TextShader);
         this->fontHeight = fontHeight;
+
+        FT_Done_Face(face);
+        FT_Done_FreeType(ft);
 	}
     
     void Font::RenderText(const std::string& text, glm::vec2 pos, float fontSize, glm::vec3 color)
@@ -80,7 +83,8 @@ namespace ORE {
         // activate corresponding render state	
         textShader->Bind();
         textShader->SetVec3("textColor", color);
-        textShader->SetMat4("projection", Renderer::CurrentCamera.GetProjection());
+        glm::mat4 projection = glm::ortho(0.0f, Renderer::UISize.x, 0.0f, Renderer::UISize.y);
+        textShader->SetMat4("projection", projection);
         glActiveTexture(GL_TEXTURE0);
         vao->Bind();
 
@@ -122,7 +126,8 @@ namespace ORE {
     }
 
     Font::~Font() {
-        FT_Done_Face(face);
-        FT_Done_FreeType(ft);
+        for (auto const& i : Characters) {
+            glDeleteTextures(1, &i.second.TextureID);
+        }
     }
 }
