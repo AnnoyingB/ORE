@@ -107,6 +107,8 @@ namespace ORE {
 				CurrentCamera.Position.y -= CameraSpeed;
 			if (glfwGetKey(CurrentWindow, GLFW_KEY_E))
 				CurrentCamera.Position.y += CameraSpeed;
+			if (glfwGetKey(CurrentWindow, GLFW_KEY_ESCAPE))
+				glfwSetWindowShouldClose(CurrentWindow, GLFW_TRUE);
 
 			oldMousePos = mousePos;
 		}

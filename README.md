@@ -1,3 +1,5 @@
+<!--
+incase i forget abt the project
 # ORE
 OpenGL Rendering Engine
 
@@ -64,6 +66,5 @@ A camera is automatically created when you initialize the Renderer. Call `GetVie
 
 ## ORE::Texture
 Create a texture with the texture create info struct.
-
-###### this is a work in progress
-###### i'm sorry if you don't understand the docs :c
+-->
+just learning opengl
