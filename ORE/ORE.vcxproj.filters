@@ -1788,5 +1788,6 @@
   <ItemGroup>
     <None Include="include\ORE\Shaders\TextShader.vert" />
     <None Include="include\ORE\Shaders\TextShader.frag" />
+    <None Include="include\ORE\Shaders\IrradianceShader.frag" />
   </ItemGroup>
 </Project>

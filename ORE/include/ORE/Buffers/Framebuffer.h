@@ -8,8 +8,10 @@ namespace ORE {
 	struct Skybox {
 		Framebuffer* skyboxFBO;
 		Mesh* skybox;
-		Shader* skyBoxShader;
-		Texture *hdrTexture, *envCubemap;
+		Shader *skyBoxShader, *irradianceShader;
+		Texture *hdrTexture, *envCubemap, *irradianceMap;
+
+		bool initialized;
 
 		Skybox(const std::string& hdrPath, Mesh* skyboxMesh);
 		void DrawSkybox();
@@ -26,6 +28,8 @@ namespace ORE {
 		int width;
 		int height;
 	public:
+		unsigned int rbo, texID;
+
 		Framebuffer(FrameBufferCreateInfo fboi = { 1280, 1920 }, bool rbo = true);
 		virtual ~Framebuffer();
 

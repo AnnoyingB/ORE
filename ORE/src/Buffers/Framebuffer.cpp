@@ -37,15 +37,20 @@ namespace ORE {
 
 		tci.repeatR = ClampToEdge;
 		tci.textureType = CubeMap;
-		tci.textureFormat = GL_RGBA16F;
-		//tci.textureFormat = GL_SRGB;
-		tci.internalFormat = GL_RGBA;
+		tci.width = 512;
+		tci.height = 512;
 
 		Texture* envTex = new Texture(tci);
+		
+		tci.width = 32;
+		tci.height = 32;
 
 		skyBoxShader = new Shader(Shader::SkyBoxShader);
+		irradianceShader = new Shader(Shader::IrradianceShader);
+		irradianceMap = new Texture(tci);
 		hdrTexture = hdrTex;
 		envCubemap = envTex;
+		initialized = false;
 
 		GLCheckError();
 
@@ -54,7 +59,18 @@ namespace ORE {
 	}
 
 	void Skybox::DrawSkybox() {
-		skyboxFBO->DrawSkybox(*this);
+		if (!initialized) {
+			std::cout << "Setup skybox" << std::endl;
+			skyboxFBO->DrawSkybox(*this);
+			initialized = true;
+		}
+
+		skyBoxShader->Bind();
+		skyBoxShader->SetMat4("view", Renderer::CurrentCamera.GetView());
+		glActiveTexture(GL_TEXTURE0);
+		hdrTexture->Bind();
+		envCubemap->Bind();
+		skybox->Draw(Renderer::CurrentCamera);
 	}
 
 	Framebuffer::Framebuffer(FrameBufferCreateInfo fboi, bool rbo) {
@@ -66,27 +82,25 @@ namespace ORE {
 		glBindFramebuffer(GL_FRAMEBUFFER, bufferID);
 
 		if (!useRBO) {
-			unsigned int texture;
-			glGenTextures(1, &texture);
-			glBindTexture(GL_TEXTURE_2D, texture);
+			glGenTextures(1, &texID);
+			glBindTexture(GL_TEXTURE_2D, texID);
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, fboi.width, fboi.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texID, 0);
 
 			glTexImage2D(
 				GL_TEXTURE_2D, 0, fboi.internalDepthFormat, fboi.width, fboi.height, 0,
 				fboi.format, fboi.type, NULL
 			);
 
-			glFramebufferTexture2D(GL_FRAMEBUFFER, fboi.attatchment, GL_TEXTURE_2D, texture, 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, fboi.attatchment, GL_TEXTURE_2D, texID, 0);
 		}
 
 		if (useRBO) {
-			unsigned int rbo;
 			glGenRenderbuffers(1, &rbo);
 			glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 			glRenderbufferStorage(GL_RENDERBUFFER, fboi.internalDepthFormat, fboi.width, fboi.height);
@@ -151,7 +165,7 @@ namespace ORE {
 		glActiveTexture(GL_TEXTURE0);
 		skybox.hdrTexture->Bind();
 
-		glViewport(0, 0, 1280, 720); // don't forget to configure the viewport to the capture dimensions.
+		glViewport(0, 0, 512, 512); // don't forget to configure the viewport to the capture dimensions.
 		Bind();
 		for (unsigned int i = 0; i < 6; ++i)
 		{
@@ -159,8 +173,33 @@ namespace ORE {
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
 				GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, *skybox.envCubemap, 0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			skybox.skybox->Draw(Renderer::CurrentCamera);
 		}
-		skybox.skybox->Draw(Renderer::CurrentCamera);
+		Unbind();
+
+		Bind();
+		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 32, 32);
+
+		skybox.irradianceShader->Bind();
+		skybox.irradianceShader->SetInt("enviromentMap", 0);
+		skybox.irradianceShader->SetMat4("projection", Renderer::CurrentCamera.GetProjection());
+		glActiveTexture(GL_TEXTURE0);
+		skybox.envCubemap->Bind();
+
+		glViewport(0, 0, 32, 32); // don't forget to configure the viewport to the capture dimensions.
+		Bind();
+		for (unsigned int i = 0; i < 6; ++i)
+		{
+			skybox.irradianceShader->SetMat4("view", captureViews[i]);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+				GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, *skybox.irradianceMap, 0);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			skybox.skybox->Draw(Renderer::CurrentCamera);
+		}
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		Unbind();
 	}
 

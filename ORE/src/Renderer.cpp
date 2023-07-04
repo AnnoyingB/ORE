@@ -118,13 +118,10 @@ namespace ORE {
 			enabledStickyKeys = false;
 		}
 
-		if (CurrentSkybox) {
-			CurrentSkybox->DrawSkybox();
-			CurrentSkybox->envCubemap->Bind();
-			RenderCalls++;
-		}
 		if (CurrentFramebuffer)
 			CurrentFramebuffer->Bind();
+		if (CurrentSkybox)
+			CurrentSkybox->irradianceMap->Bind();
 		for (Mesh* mesh : RenderableMeshes) {
 			mesh->GetConstShader().Bind();
 			mesh->GetConstShader().SetVec3("camPos", CurrentCamera.Position);
@@ -134,5 +131,10 @@ namespace ORE {
 		}
 		if (CurrentFramebuffer)
 			CurrentFramebuffer->Unbind();
+
+		if (CurrentSkybox) {
+			CurrentSkybox->DrawSkybox();
+			RenderCalls++;
+		}
 	}
 }

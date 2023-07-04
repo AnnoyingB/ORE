@@ -49,7 +49,7 @@ namespace ORE {
 				for (unsigned int i = 0; i < 6; ++i)
 				{
 					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA16F,
-						512, 512, 0, GL_RGBA, GL_FLOAT, nullptr);
+						createInfo.width, createInfo.height, 0, GL_RGBA, GL_FLOAT, nullptr);
 				}
 			}
 			else if (createInfo.textureType == Texture1D || createInfo.textureType == Texture1DArray)

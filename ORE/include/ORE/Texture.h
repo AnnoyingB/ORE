@@ -46,6 +46,7 @@ namespace ORE {
 		GLuint textureFormat = GL_RGBA, internalFormat = GL_RGBA;
 		glm::vec4 borderCol = glm::vec4(0, 0, 0, 0); // If you are using ClampToBorder, set this.
 		int depth; // If you are not using a 3d texture don't worry about this.
+		int width, height; // For CubeMap
 		bool flip = false;
 		bool loadWithFloat = false;
 	};

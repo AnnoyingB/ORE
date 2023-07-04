@@ -67,7 +67,7 @@ int main() {
 
 		ORE::Renderer::RenderMeshes();
 		font->RenderText("Hello World!", { 25, 25 }, 24);
-		pointLight->RenderBillboard();
+		//pointLight->RenderBillboard();
 
 		window.Poll();
 	}
