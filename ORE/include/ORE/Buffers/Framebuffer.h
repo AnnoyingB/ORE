@@ -8,8 +8,8 @@ namespace ORE {
 	struct Skybox {
 		Framebuffer* skyboxFBO;
 		Mesh* skybox;
-		Shader *skyBoxShader, *irradianceShader;
-		Texture *hdrTexture, *envCubemap, *irradianceMap;
+		Shader *skyBoxShader, *irradianceShader, *prefilterShader;
+		Texture *hdrTexture, *envCubemap, *irradianceMap, *prefilterMap;
 
 		bool initialized;
 

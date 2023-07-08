@@ -1,32 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include=".vs">
+      <UniqueIdentifier>{3C86870B-A88F-877C-310B-9E7C9D13937C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".vs\ORE">
+      <UniqueIdentifier>{F16433F4-5D44-B28F-665C-3D66D2BA18F1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".vs\ORE\v17">
+      <UniqueIdentifier>{BE376AF8-2AED-E2ED-B3E1-DCC41F96D9F1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".vs\ORE\v17\ipch">
+      <UniqueIdentifier>{91BB26D5-7DB4-4527-A6E6-2AAC923E2533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".vs\ORE\v17\ipch\AutoPCH">
+      <UniqueIdentifier>{34262A81-204B-7901-4996-5E91351A781F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".vs\ORE\v17\ipch\AutoPCH\9725e0f2fa789f16">
+      <UniqueIdentifier>{0330B822-6F4A-1BC4-B86C-2B5824C642CB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include">
       <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\ORE">
       <UniqueIdentifier>{BE6CC031-2A22-3927-B316-33FE1FCB2F2B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\ORE\Buffers">
-      <UniqueIdentifier>{3A0ABD36-A66B-9A44-2FD9-E0F69B39D103}</UniqueIdentifier>
+    <Filter Include="include\ORE\Vulkan">
+      <UniqueIdentifier>{7EF879CB-6ADC-3A21-D33C-3574BF3F25A3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\ORE\Lighting">
-      <UniqueIdentifier>{0336B7AF-EFC4-4079-98E3-54748451511F}</UniqueIdentifier>
+    <Filter Include="obj">
+      <UniqueIdentifier>{2098880B-8CA1-887C-151D-9F7C8125947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\ORE\Objects">
-      <UniqueIdentifier>{77E967F3-E34A-4501-6CB8-8BB3D8187CC0}</UniqueIdentifier>
+    <Filter Include="obj\x64">
+      <UniqueIdentifier>{91737350-FD52-F2EB-066B-7DC272C9584D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="obj\x64\Debug">
+      <UniqueIdentifier>{C7266410-33E7-DF46-FC21-29C468A12423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="obj\x64\ExecTest">
+      <UniqueIdentifier>{25EFACA3-11E8-CBF5-3A1A-B17A2672AB01}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Buffers">
-      <UniqueIdentifier>{A947D8FD-15FD-50F3-9EF1-4ACA0AA647F7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Lighting">
-      <UniqueIdentifier>{52213A5A-3E84-C9FE-E709-02B5D34B9581}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Objects">
-      <UniqueIdentifier>{E62683BA-52DC-FBAF-DBD0-F5864785F2B3}</UniqueIdentifier>
+    <Filter Include="src\Vulkan">
+      <UniqueIdentifier>{0DC45B36-F97B-9D83-6283-76DF4E5A3874}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
@@ -34,23 +52,35 @@
     <Filter Include="vendor\GLFW">
       <UniqueIdentifier>{D27667C1-3E2C-E0B6-C720-DA8D33D5D6BA}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vendor\KHR">
-      <UniqueIdentifier>{A723C5A8-93DB-06F6-FCE2-DF51E8B9A1E6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vendor\freetype">
       <UniqueIdentifier>{C64BB7D5-32D7-249A-3BE8-A78EA7F2809A}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\freetype\config">
       <UniqueIdentifier>{2B201677-171A-3FC9-0087-D5D9EC1FA535}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\freetype\docs">
+      <UniqueIdentifier>{7ED266C4-6A61-F08D-1380-0489FFED0034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\freetype\docs\markdown">
+      <UniqueIdentifier>{D0FBCCF6-3C14-B420-05C1-43BA719848BA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\freetype\docs\markdown\images">
+      <UniqueIdentifier>{95C64B79-81AD-0D71-2AFE-738E16C486D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\freetype\docs\markdown\javascripts">
+      <UniqueIdentifier>{C98C57AB-35A7-BA4C-7EC9-CAE0EA22E253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\freetype\docs\markdown\stylesheets">
+      <UniqueIdentifier>{5C0C981B-C826-FBBC-1149-0B517DA222C4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\freetype\docs\oldlogs">
+      <UniqueIdentifier>{A1B22AF8-8D6D-1AA4-3625-93EE22BF6434}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor\freetype\internal">
       <UniqueIdentifier>{D28CA1DF-BEB1-F05F-E7FC-D5EFD380EF7D}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\freetype\internal\services">
       <UniqueIdentifier>{051B6E12-7189-C391-BA72-7E912620B92D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\glad">
-      <UniqueIdentifier>{9A8E79C1-0644-F2B6-8F38-EC8DFBECE8BA}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\glm">
       <UniqueIdentifier>{829FC5A8-6E57-07F6-D75E-E051C335A2E6}</UniqueIdentifier>
@@ -70,58 +100,109 @@
     <Filter Include="vendor\glm\simd">
       <UniqueIdentifier>{1EFDF202-8A88-60C7-9399-E3BBFFA3BCC7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\glslang">
+      <UniqueIdentifier>{AA0757CA-96D5-4AD0-7F69-BBF66BD62635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glslang\Include">
+      <UniqueIdentifier>{FDA0564E-E99A-7FA0-D207-16B1BEA0E50C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glslang\MachineIndependent">
+      <UniqueIdentifier>{3CCEF58B-A83C-4B0B-F125-060B5DD340A7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glslang\Public">
+      <UniqueIdentifier>{98270B78-0494-C672-CD87-5ED039B3E8DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glslang\SPIRV">
+      <UniqueIdentifier>{4D261A59-39B5-A322-E2D3-B71DCE41B4C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\libs">
+      <UniqueIdentifier>{EC3F7CC1-58F5-F4B6-E1E9-EE8D4D9EEBBA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\libs\Debug">
+      <UniqueIdentifier>{628BC9EC-CEA1-C782-1719-53A4836E980A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\libs\Release">
+      <UniqueIdentifier>{1C63B57B-88C4-9289-1132-D93B7D92C948}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\shaderc">
+      <UniqueIdentifier>{9C33735B-8801-6761-7195-D7875D0243C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\spirv-headers">
+      <UniqueIdentifier>{BF307415-ABBF-FDDE-54DE-11DA404C0E85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\spirv-tools">
+      <UniqueIdentifier>{94D1C9AF-80B5-8A05-E915-8558D5187587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\spirv_cross">
+      <UniqueIdentifier>{7FC63923-6BAA-FA78-D40A-F5CBC00DE5FA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vk_video">
+      <UniqueIdentifier>{793A2B72-E5C5-9836-EED6-1B2B5AE1F436}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma">
+      <UniqueIdentifier>{66DFC5A8-5297-07F6-BB9E-E051A775A2E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git">
+      <UniqueIdentifier>{67ECA40B-D377-12D0-DC88-95C448936ED0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\hooks">
+      <UniqueIdentifier>{1A8C8F54-86F8-4A4F-4FEC-E2ACBB176DB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\info">
+      <UniqueIdentifier>{C2B96967-AE48-F330-5767-072C43D503D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\logs">
+      <UniqueIdentifier>{4B636B67-37F2-F430-E010-092CCC7E05D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\logs\refs">
+      <UniqueIdentifier>{4AE88663-B6AA-BAED-FF5A-497A6B5C93CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\logs\refs\heads">
+      <UniqueIdentifier>{FEED9FEC-6AD1-AE2C-73D4-DC68DF36757D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\logs\refs\remotes">
+      <UniqueIdentifier>{F804F996-6473-4E16-AD5C-0916190A44B2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\logs\refs\remotes\origin">
+      <UniqueIdentifier>{8FC41AF9-7B41-0E3C-A4BE-0E50909AAACF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\objects">
+      <UniqueIdentifier>{409AC9B2-ACD1-114A-B5DB-756D21923843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\objects\pack">
+      <UniqueIdentifier>{2E96B5AB-1A51-A557-C308-1EA2AFA2EFE7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\refs">
+      <UniqueIdentifier>{E6826E67-D211-F830-7B30-0C2C679E08D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\refs\heads">
+      <UniqueIdentifier>{9A0DD072-861D-7C43-EFD6-E061DB056BDC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\refs\remotes">
+      <UniqueIdentifier>{947BAF69-8036-9F15-29EE-17601588E9A5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\.git\refs\remotes\origin">
+      <UniqueIdentifier>{AB334E33-17ED-B8DD-A04C-D3B70C056F4D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vma\src">
+      <UniqueIdentifier>{7DE0EE4D-69AE-E253-5242-537A3EAFBEB8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\volk">
+      <UniqueIdentifier>{7ED681C1-EA8B-FAB6-7380-F48DDF34F1BA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\vulkan">
+      <UniqueIdentifier>{F30DBE29-5FCE-3960-2809-83DD94887E3C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="x64">
+      <UniqueIdentifier>{87B8880B-F3C1-887C-7C3D-9F7CE845947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="x64\Debug">
+      <UniqueIdentifier>{3DCCD277-A936-87EE-F274-38945E1E6543}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ORE\Buffers\Buffer.h">
-      <Filter>include\ORE\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Buffers\Framebuffer.h">
-      <Filter>include\ORE\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Buffers\IndexBuffer.h">
-      <Filter>include\ORE\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Buffers\VertexArray.h">
-      <Filter>include\ORE\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Buffers\VertexBuffer.h">
-      <Filter>include\ORE\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Camera.h">
-      <Filter>include\ORE</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Debugging.h">
-      <Filter>include\ORE</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Lighting\DirectionalLight.h">
-      <Filter>include\ORE\Lighting</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Lighting\PointLight.h">
-      <Filter>include\ORE\Lighting</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Material.h">
-      <Filter>include\ORE</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Mesh.h">
-      <Filter>include\ORE</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Objects\Billboard.h">
-      <Filter>include\ORE\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Objects\Font.h">
-      <Filter>include\ORE\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Objects\Sprite2D.h">
-      <Filter>include\ORE\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Renderer.h">
-      <Filter>include\ORE</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Shader.h">
-      <Filter>include\ORE</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ORE\Texture.h">
-      <Filter>include\ORE</Filter>
+    <ClInclude Include="include\ORE\Vulkan\Renderer.h">
+      <Filter>include\ORE\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="include\ORE\Window.h">
       <Filter>include\ORE</Filter>
@@ -134,9 +215,6 @@
     </ClInclude>
     <ClInclude Include="vendor\GLFW\glfw3native.h">
       <Filter>vendor\GLFW</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\KHR\khrplatform.h">
-      <Filter>vendor\KHR</Filter>
     </ClInclude>
     <ClInclude Include="vendor\freetype\config\ftconfig.h">
       <Filter>vendor\freetype\config</Filter>
@@ -437,9 +515,6 @@
     </ClInclude>
     <ClInclude Include="vendor\ft2build.h">
       <Filter>vendor</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\glad\glad.h">
-      <Filter>vendor\glad</Filter>
     </ClInclude>
     <ClInclude Include="vendor\glm\common.hpp">
       <Filter>vendor\glm</Filter>
@@ -1719,58 +1794,284 @@
     <ClInclude Include="vendor\glm\vector_relational.hpp">
       <Filter>vendor\glm</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\glslang\Include\BaseTypes.h">
+      <Filter>vendor\glslang\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\Include\Common.h">
+      <Filter>vendor\glslang\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\Include\ConstantUnion.h">
+      <Filter>vendor\glslang\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\Include\PoolAlloc.h">
+      <Filter>vendor\glslang\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\Include\ResourceLimits.h">
+      <Filter>vendor\glslang\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\Include\SpirvIntrinsics.h">
+      <Filter>vendor\glslang\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\Include\Types.h">
+      <Filter>vendor\glslang\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\Include\arrays.h">
+      <Filter>vendor\glslang\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\Include\intermediate.h">
+      <Filter>vendor\glslang\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\MachineIndependent\Versions.h">
+      <Filter>vendor\glslang\MachineIndependent</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\MachineIndependent\localintermediate.h">
+      <Filter>vendor\glslang\MachineIndependent</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\Public\ShaderLang.h">
+      <Filter>vendor\glslang\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\SPIRV\GlslangToSpv.h">
+      <Filter>vendor\glslang\SPIRV</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\SPIRV\Logger.h">
+      <Filter>vendor\glslang\SPIRV</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\SPIRV\SPVRemapper.h">
+      <Filter>vendor\glslang\SPIRV</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\SPIRV\SpvTools.h">
+      <Filter>vendor\glslang\SPIRV</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\SPIRV\spirv.hpp">
+      <Filter>vendor\glslang\SPIRV</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glslang\SPIRV\spvIR.h">
+      <Filter>vendor\glslang\SPIRV</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\shaderc\env.h">
+      <Filter>vendor\shaderc</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\shaderc\shaderc.h">
+      <Filter>vendor\shaderc</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\shaderc\shaderc.hpp">
+      <Filter>vendor\shaderc</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\shaderc\status.h">
+      <Filter>vendor\shaderc</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\shaderc\visibility.h">
+      <Filter>vendor\shaderc</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv-headers\GLSL.std.450.h">
+      <Filter>vendor\spirv-headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv-headers\spirv.h">
+      <Filter>vendor\spirv-headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv-headers\spirv.hpp">
+      <Filter>vendor\spirv-headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv-tools\libspirv.h">
+      <Filter>vendor\spirv-tools</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv-tools\libspirv.hpp">
+      <Filter>vendor\spirv-tools</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv-tools\linker.hpp">
+      <Filter>vendor\spirv-tools</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv-tools\optimizer.hpp">
+      <Filter>vendor\spirv-tools</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\GLSL.std.450.h">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv.h">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_cfg.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_common.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_cross.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_cross_c.h">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_cross_containers.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_cross_error_handling.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_cross_parsed_ir.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_glsl.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_hlsl.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_msl.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_parser.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\spirv_cross\spirv_reflect.hpp">
+      <Filter>vendor\spirv_cross</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\stb_image.h">
       <Filter>vendor</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h264std.h">
+      <Filter>vendor\vk_video</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h264std_decode.h">
+      <Filter>vendor\vk_video</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h264std_encode.h">
+      <Filter>vendor\vk_video</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h265std.h">
+      <Filter>vendor\vk_video</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h265std_decode.h">
+      <Filter>vendor\vk_video</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h265std_encode.h">
+      <Filter>vendor\vk_video</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vk_video\vulkan_video_codecs_common.h">
+      <Filter>vendor\vk_video</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vma\src\Common.h">
+      <Filter>vendor\vma\src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vma\src\SparseBindingTest.h">
+      <Filter>vendor\vma\src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vma\src\Tests.h">
+      <Filter>vendor\vma\src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vma\src\VmaUsage.h">
+      <Filter>vendor\vma\src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vma\vk_mem_alloc.h">
+      <Filter>vendor\vma</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\volk\volk.h">
+      <Filter>vendor\volk</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vk_enum_string_helper.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vk_icd.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vk_layer.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vk_platform.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vk_sdk_platform.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan.hpp">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_android.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_beta.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_core.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_directfb.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_enums.hpp">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_format_traits.hpp">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_fuchsia.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_funcs.hpp">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_ggp.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_handles.hpp">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_hash.hpp">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_ios.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_macos.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_metal.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_profiles.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_profiles.hpp">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_raii.hpp">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_screen.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_structs.hpp">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_vi.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_wayland.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_win32.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_xcb.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_xlib.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\vulkan\vulkan_xlib_xrandr.h">
+      <Filter>vendor\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ORE\Vulkan\GraphicsPipeline.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Buffers\Buffer.cpp">
-      <Filter>src\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Buffers\Framebuffer.cpp">
-      <Filter>src\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Buffers\IndexBuffer.cpp">
-      <Filter>src\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Buffers\VertexArray.cpp">
-      <Filter>src\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Buffers\VertexBuffer.cpp">
-      <Filter>src\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Camera.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Lighting\DirectionalLight.cpp">
-      <Filter>src\Lighting</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Lighting\PointLight.cpp">
-      <Filter>src\Lighting</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Material.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mesh.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Objects\Billboard.cpp">
-      <Filter>src\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Objects\Font.cpp">
-      <Filter>src\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Objects\Sprite2D.cpp">
-      <Filter>src\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Shader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\Vulkan\Renderer.cpp">
+      <Filter>src\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
       <Filter>src</Filter>
@@ -1778,16 +2079,281 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\glad\glad.c">
-      <Filter>vendor\glad</Filter>
-    </ClCompile>
     <ClCompile Include="vendor\glm\detail\glm.cpp">
       <Filter>vendor\glm\detail</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\vma\src\Common.cpp">
+      <Filter>vendor\vma\src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\vma\src\SparseBindingTest.cpp">
+      <Filter>vendor\vma\src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\vma\src\Tests.cpp">
+      <Filter>vendor\vma\src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\vma\src\VmaUsage.cpp">
+      <Filter>vendor\vma\src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\vma\src\VulkanSample.cpp">
+      <Filter>vendor\vma\src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\volk\volk.c">
+      <Filter>vendor\volk</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vulkan\GraphicsPipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="include\ORE\Shaders\TextShader.vert" />
-    <None Include="include\ORE\Shaders\TextShader.frag" />
-    <None Include="include\ORE\Shaders\IrradianceShader.frag" />
+    <None Include=".vs\ORE\v17\ipch\AutoPCH\9725e0f2fa789f16\MAIN.ipch">
+      <Filter>.vs\ORE\v17\ipch\AutoPCH\9725e0f2fa789f16</Filter>
+    </None>
+    <None Include="obj\x64\Debug\Window.obj">
+      <Filter>obj\x64\Debug</Filter>
+    </None>
+    <None Include="obj\x64\Debug\main.obj">
+      <Filter>obj\x64\Debug</Filter>
+    </None>
+    <None Include="obj\x64\ExecTest\Window.obj">
+      <Filter>obj\x64\ExecTest</Filter>
+    </None>
+    <None Include="obj\x64\ExecTest\main.obj">
+      <Filter>obj\x64\ExecTest</Filter>
+    </None>
+    <None Include="obj\x64\ExecTest\window.obj.enc">
+      <Filter>obj\x64\ExecTest</Filter>
+    </None>
+    <None Include="vendor\freetype\LICENSE.TXT">
+      <Filter>vendor\freetype</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\.gitignore">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\CHANGES">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\CMAKE">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\CUSTOMIZE">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\DEBUG">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\DOCGUIDE">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\FTL.TXT">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\GPLv2.TXT">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\INSTALL">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\INSTALL.ANY">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\INSTALL.CROSS">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\INSTALL.GNU">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\INSTALL.MAC">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\INSTALL.UNIX">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\INSTALL.VMS">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\MAKEPP">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\PROBLEMS">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\README">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\TODO">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\VERSIONS.TXT">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\formats.txt">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\freetype-config.1">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\markdown\images\favico.ico">
+      <Filter>vendor\freetype\docs\markdown\images</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\markdown\javascripts\extra.js">
+      <Filter>vendor\freetype\docs\markdown\javascripts</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\markdown\stylesheets\extra.css">
+      <Filter>vendor\freetype\docs\markdown\stylesheets</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.20">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.21">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.210">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.22">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.23">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.24">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.25">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.26">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.27">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.28">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.29">
+      <Filter>vendor\freetype\docs\oldlogs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\raster.txt">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\freetype\docs\release">
+      <Filter>vendor\freetype\docs</Filter>
+    </None>
+    <None Include="vendor\libs\Debug\freetyped.lib">
+      <Filter>vendor\libs\Debug</Filter>
+    </None>
+    <None Include="vendor\libs\Debug\freetyped.pdb">
+      <Filter>vendor\libs\Debug</Filter>
+    </None>
+    <None Include="vendor\libs\Release\freetype.lib">
+      <Filter>vendor\libs\Release</Filter>
+    </None>
+    <None Include="vendor\libs\glfw3.lib">
+      <Filter>vendor\libs</Filter>
+    </None>
+    <None Include="vendor\libs\glfw3_mt.lib">
+      <Filter>vendor\libs</Filter>
+    </None>
+    <None Include="vendor\spirv-headers\spirv.hpp11">
+      <Filter>vendor\spirv-headers</Filter>
+    </None>
+    <None Include="vendor\spirv-headers\spirv.json">
+      <Filter>vendor\spirv-headers</Filter>
+    </None>
+    <None Include="vendor\spirv-headers\spirv.lua">
+      <Filter>vendor\spirv-headers</Filter>
+    </None>
+    <None Include="vendor\spirv-headers\spirv.py">
+      <Filter>vendor\spirv-headers</Filter>
+    </None>
+    <None Include="vendor\vma\.git\HEAD">
+      <Filter>vendor\vma\.git</Filter>
+    </None>
+    <None Include="vendor\vma\.git\config">
+      <Filter>vendor\vma\.git</Filter>
+    </None>
+    <None Include="vendor\vma\.git\description">
+      <Filter>vendor\vma\.git</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\applypatch-msg.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\commit-msg.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\fsmonitor-watchman.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\post-update.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\pre-applypatch.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\pre-commit.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\pre-merge-commit.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\pre-push.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\pre-rebase.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\pre-receive.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\prepare-commit-msg.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\push-to-checkout.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\hooks\update.sample">
+      <Filter>vendor\vma\.git\hooks</Filter>
+    </None>
+    <None Include="vendor\vma\.git\index">
+      <Filter>vendor\vma\.git</Filter>
+    </None>
+    <None Include="vendor\vma\.git\info\exclude">
+      <Filter>vendor\vma\.git\info</Filter>
+    </None>
+    <None Include="vendor\vma\.git\logs\HEAD">
+      <Filter>vendor\vma\.git\logs</Filter>
+    </None>
+    <None Include="vendor\vma\.git\logs\refs\heads\master">
+      <Filter>vendor\vma\.git\logs\refs\heads</Filter>
+    </None>
+    <None Include="vendor\vma\.git\logs\refs\remotes\origin\HEAD">
+      <Filter>vendor\vma\.git\logs\refs\remotes\origin</Filter>
+    </None>
+    <None Include="vendor\vma\.git\objects\pack\pack-8b8cd59a0a3195f40b7285c163d0cc74de108ef4.idx">
+      <Filter>vendor\vma\.git\objects\pack</Filter>
+    </None>
+    <None Include="vendor\vma\.git\objects\pack\pack-8b8cd59a0a3195f40b7285c163d0cc74de108ef4.pack">
+      <Filter>vendor\vma\.git\objects\pack</Filter>
+    </None>
+    <None Include="vendor\vma\.git\packed-refs">
+      <Filter>vendor\vma\.git</Filter>
+    </None>
+    <None Include="vendor\vma\.git\refs\heads\master">
+      <Filter>vendor\vma\.git\refs\heads</Filter>
+    </None>
+    <None Include="vendor\vma\.git\refs\remotes\origin\HEAD">
+      <Filter>vendor\vma\.git\refs\remotes\origin</Filter>
+    </None>
+    <None Include="vendor\vma\LICENSE.txt">
+      <Filter>vendor\vma</Filter>
+    </None>
+    <None Include="vendor\volk\LICENSE.md">
+      <Filter>vendor\volk</Filter>
+    </None>
+    <None Include="x64\Debug\Window.obj">
+      <Filter>x64\Debug</Filter>
+    </None>
+    <None Include="x64\Debug\main.obj">
+      <Filter>x64\Debug</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -2,13 +2,14 @@
 #include "Shader.h"
 
 namespace ORE {
-	inline const std::string Shader::OREShaders = std::string("include\\ORE\\Shaders\\");
+	inline const std::string Shader::OREShaders = std::string("include\\ORE\\Assets\\Shaders\\");
 	inline const std::string Shader::PBRShader = Shader::OREShaders + "PBRShader";
 	inline const std::string Shader::CubeMapShader = Shader::OREShaders + "CubeMap";
 	inline const std::string Shader::SkyBoxShader = Shader::OREShaders + "SkyBoxShader";
 	inline const std::string Shader::BillboardShader = Shader::OREShaders + "BillboardShader";
 	inline const std::string Shader::TextShader = Shader::OREShaders + "TextShader";
 	inline const std::string Shader::IrradianceShader = Shader::OREShaders + "IrradianceShader";
+	inline const std::string Shader::PrefilterShader = Shader::OREShaders + "PrefilterShader";
 
 	Shader::Shader(std::string shaderPath) {
 		shaderID = -1;

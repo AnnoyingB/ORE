@@ -10,11 +10,24 @@ newoption {
 	default = "none"
 }
 
+newoption {
+   trigger     = "api",
+   value       = "API",
+   description = "Choose a particular API for rendering",
+   default     = "opengl",
+   category    = "Options",
+   allowed = {
+      { "opengl",    "OpenGL" },
+      { "vulkan",    "Vulkan" },
+   }
+}
+
 workspace "OREProj"
 	configurations { "Debug", "Release", "ExecTest" }
 	platforms { "x64" }
 	kind "StaticLib"
     architecture "x64"
+	startproject "ORE"
 
 
 project "OREML"
@@ -58,7 +71,14 @@ project "ORE"
 	cppdialect "C++20"
 	targetdir "bin/%{cfg.buildcfg}"
 
-	files { "ORE/**.h", "ORE/**.c", "ORE/**.cpp", "ORE/**.inl", "ORE/**.hpp" }
+	filter "options:api=opengl"
+		files { "ORE/**.h", "ORE/**.c", "ORE/**.cpp", "ORE/**.inl", "ORE/**.hpp" }
+		removefiles { "ORE/**/Vulkan/**.**" }
+	filter "options:api=vulkan"
+		files { "ORE/include/ORE/Vulkan/**.**", "ORE/src/Vulkan/**.**", "ORE/**/Window.**", "ORE/include/ORE/orepch.**", "ORE/**/main.**", "ORE/vendor/**.**" }
+		removefiles { "ORE/vendor/glad/**.**", "ORE/vendor/KHR/**.**" }
+		defines {"API_VULKAN"}
+	filter {}
 	includedirs { "ORE/vendor", "ORE/include/ORE" }
 	libdirs { "ORE/vendor/libs" }
 	links
@@ -66,6 +86,7 @@ project "ORE"
 		"freetyped.lib",
 		"glfw3.lib",
 		"glfw3_mt.lib",
+		"glslang.lib",
 	}
 
 	filter "options:extensions=oreml"

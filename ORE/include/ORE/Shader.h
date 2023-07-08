@@ -24,6 +24,7 @@ namespace ORE {
 		static const std::string BillboardShader;
 		static const std::string TextShader;
 		static const std::string IrradianceShader;
+		static const std::string PrefilterShader;
 
 		// please do not actually use this.
 		Shader() = default;

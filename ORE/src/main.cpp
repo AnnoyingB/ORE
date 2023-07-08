@@ -1,26 +1,37 @@
 //#define ORE
+#define STB_IMAGE_IMPLEMENTATION
 #include "orepch.h"
 #include "Window.h"
-#include "Renderer.h"
-#include "OREML/Loader.h"
-#include "Objects/Billboard.h"
-#include "Objects/Font.h"
+#include "Vulkan/Renderer.h"
+//#include "OREML/Loader.h"
+//#include "Objects/Billboard.h"
+//#include "Objects/Font.h"
 
 using namespace ORE;
 
 int main() {
 	Window window;
 	window.Create("ORE", { 1280, 720 });
-	window.InitGlad();
+	VKRenderer::Initialize(window);
 
-	/*MeshCreateInfo MCI{};
-	MCI.vertices = std::vector<ORE::Vertex>();
-	MCI.vertices.push_back({ { -0.5f, -0.5f, 0.0f }, { 1.f, 0.f, 0.f, 1.f }, { -1.f, -1.f, 0.f } });
-	MCI.vertices.push_back({ { 0.5f, -0.5f, 0.0f }, { 0.f, 1.f, 0.f, 1.f }, { 1.f, -1.f, 0.f } });
-	MCI.vertices.push_back({ { 0.0f, 0.5f, 0.0f }, { 0.f, 0.f, 1.f, 1.f }, { 0.f, 1.f, 0.f } });
-	MCI.indices = { 0, 1, 2 };*/
+	Pipeline pipeline = *VKRenderer::CreatePipeline({ "include\\ORE\\Assets\\Shaders\\Vulkan\\SimpleShaderV.spv", "include\\ORE\\Assets\\Shaders\\Vulkan\\SimpleShaderF.spv" });;
+
+	while (!window.ShouldClose()) {
+		window.Poll();
+		VKRenderer::Record();
+		VKRenderer::Draw(pipeline);
+		VKRenderer::Present();
+	}
+	/*window.InitGlad();
+
+	//MeshCreateInfo MCI{};
+	//MCI.vertices = std::vector<ORE::Vertex>();
+	//MCI.vertices.push_back({ { -0.5f, -0.5f, 0.0f }, { 1.f, 0.f, 0.f, 1.f }, { -1.f, -1.f, 0.f } });
+	//MCI.vertices.push_back({ { 0.5f, -0.5f, 0.0f }, { 0.f, 1.f, 0.f, 1.f }, { 1.f, -1.f, 0.f } });
+	//MCI.vertices.push_back({ { 0.0f, 0.5f, 0.0f }, { 0.f, 0.f, 1.f, 1.f }, { 0.f, 1.f, 0.f } });
+	//MCI.indices = { 0, 1, 2 };
 	MeshCreateInfo MCI{};
-	MCI = OREML::Loader::Load("include\\ORE\\Models\\SkyBox.fbx")[0];
+	MCI = OREML::Loader::Load("include\\ORE\\Assets\\Models\\SkyBox.fbx")[0];
 	MCI.shaderPath = ORE::Shader::PBRShader;
 
 	CurrentDirectionalLight = std::make_unique<DirectionalLight>();
@@ -49,7 +60,7 @@ int main() {
 	mesh->Material->Apply();
 	mesh->Material->UpdateLighting();
 
-	MCI.shaderPath = ORE::Shader::CubeMapShader;
+	MCI.shaderPath = ORE::Shader::SkyBoxShader;
 
 	ORE::Mesh* skyboxMesh = ORE::Renderer::CreateMesh(MCI);
 
@@ -72,6 +83,7 @@ int main() {
 		window.Poll();
 	}
 
-	ORE::Renderer::Cleanup();
+	ORE::Renderer::Cleanup();*/
+	VKRenderer::Cleanup();
 	return 0;
 }

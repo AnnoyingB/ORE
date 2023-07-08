@@ -45,12 +45,18 @@ namespace ORE {
 		tci.width = 32;
 		tci.height = 32;
 
-		skyBoxShader = new Shader(Shader::SkyBoxShader);
+		skyBoxShader = new Shader(Shader::CubeMapShader);
 		irradianceShader = new Shader(Shader::IrradianceShader);
+		prefilterShader = new Shader(Shader::PrefilterShader);
 		irradianceMap = new Texture(tci);
 		hdrTexture = hdrTex;
 		envCubemap = envTex;
 		initialized = false;
+
+		tci.width = 128;
+		tci.height = 128;
+		tci.mipmapsMin = LinearMipMapLinear;
+		prefilterMap = new Texture(tci);
 
 		GLCheckError();
 
@@ -68,9 +74,13 @@ namespace ORE {
 		skyBoxShader->Bind();
 		skyBoxShader->SetMat4("view", Renderer::CurrentCamera.GetView());
 		glActiveTexture(GL_TEXTURE0);
-		hdrTexture->Bind();
+		//hdrTexture->Bind();
 		envCubemap->Bind();
+		//prefilterMap->Bind();
+		skybox->GetConstShader().SetMat4("view", Renderer::CurrentCamera.GetView());
+		glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 		skybox->Draw(Renderer::CurrentCamera);
+		glDisable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 	}
 
 	Framebuffer::Framebuffer(FrameBufferCreateInfo fboi, bool rbo) {
@@ -158,10 +168,12 @@ namespace ORE {
 		   glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
 		   glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
 		};
+		glm::mat4 projection = Renderer::CurrentCamera.GetProjection();
 
 		// convert HDR equirectangular environment map to cubemap equivalent
 		skybox.skyBoxShader->Bind();
-		skybox.skyBoxShader->SetMat4("projection", Renderer::CurrentCamera.GetProjection());
+		skybox.skyBoxShader->SetInt("equirectangularMap", 0);
+		skybox.skyBoxShader->SetMat4("projection", projection);
 		glActiveTexture(GL_TEXTURE0);
 		skybox.hdrTexture->Bind();
 
@@ -184,7 +196,7 @@ namespace ORE {
 
 		skybox.irradianceShader->Bind();
 		skybox.irradianceShader->SetInt("enviromentMap", 0);
-		skybox.irradianceShader->SetMat4("projection", Renderer::CurrentCamera.GetProjection());
+		skybox.irradianceShader->SetMat4("projection", projection);
 		glActiveTexture(GL_TEXTURE0);
 		skybox.envCubemap->Bind();
 
@@ -201,6 +213,37 @@ namespace ORE {
 		}
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		Unbind();
+		skybox.prefilterShader->Bind();
+		skybox.prefilterShader->SetInt("environmentMap", 0);
+		skybox.prefilterShader->SetMat4("projection", projection);
+		glActiveTexture(GL_TEXTURE0);
+		skybox.envCubemap->Bind();
+
+		Bind();
+		unsigned int maxMipLevels = 5;
+		for (unsigned int mip = 0; mip < maxMipLevels; ++mip)
+		{
+			// reisze framebuffer according to mip-level size.
+			unsigned int mipWidth = 128 * std::pow(0.5, mip);
+			unsigned int mipHeight = 128 * std::pow(0.5, mip);
+			glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, mipWidth, mipHeight);
+			glViewport(0, 0, mipWidth, mipHeight);
+
+			float roughness = (float)mip / (float)(maxMipLevels - 1);
+			skybox.prefilterShader->SetFloat("roughness", roughness);
+			for (unsigned int i = 0; i < 6; ++i)
+			{
+				skybox.prefilterShader->SetMat4("view", captureViews[i]);
+				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+					GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, *skybox.prefilterMap, mip);
+
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				skybox.skybox->Draw(Renderer::CurrentCamera);
+			}
+		}
+		Unbind();
+		glViewport(0, 0, 1280, 720);
 	}
 
 	Framebuffer::~Framebuffer() {

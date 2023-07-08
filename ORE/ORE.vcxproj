@@ -75,7 +75,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>API_VULKAN;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor;include\ORE;..\OREML\include;..\OREML\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -95,7 +95,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>API_VULKAN;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor;include\ORE;..\OREML\include;..\OREML\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -119,7 +119,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SHADERS_COMPILED;VK_USE_PLATFORM_WIN32_KHR ;API_VULKAN;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor;include\ORE;..\OREML\include;..\OREML\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -129,33 +129,17 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>freetyped.lib;glfw3.lib;glfw3_mt.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glslang.lib;freetyped.lib;glfw3.lib;glfw3_mt.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>vendor\libs;..\OREML\vendor;..\OREML\vendor\bin;vendor\libs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\ORE\Buffers\Buffer.h" />
-    <ClInclude Include="include\ORE\Buffers\Framebuffer.h" />
-    <ClInclude Include="include\ORE\Buffers\IndexBuffer.h" />
-    <ClInclude Include="include\ORE\Buffers\VertexArray.h" />
-    <ClInclude Include="include\ORE\Buffers\VertexBuffer.h" />
-    <ClInclude Include="include\ORE\Camera.h" />
-    <ClInclude Include="include\ORE\Debugging.h" />
-    <ClInclude Include="include\ORE\Lighting\DirectionalLight.h" />
-    <ClInclude Include="include\ORE\Lighting\PointLight.h" />
-    <ClInclude Include="include\ORE\Material.h" />
-    <ClInclude Include="include\ORE\Mesh.h" />
-    <ClInclude Include="include\ORE\Objects\Billboard.h" />
-    <ClInclude Include="include\ORE\Objects\Font.h" />
-    <ClInclude Include="include\ORE\Objects\Sprite2D.h" />
-    <ClInclude Include="include\ORE\Renderer.h" />
-    <ClInclude Include="include\ORE\Shader.h" />
-    <ClInclude Include="include\ORE\Texture.h" />
+    <ClInclude Include="include\ORE\Vulkan\GraphicsPipeline.h" />
+    <ClInclude Include="include\ORE\Vulkan\Renderer.h" />
     <ClInclude Include="include\ORE\Window.h" />
     <ClInclude Include="include\ORE\orepch.h" />
     <ClInclude Include="vendor\GLFW\glfw3.h" />
     <ClInclude Include="vendor\GLFW\glfw3native.h" />
-    <ClInclude Include="vendor\KHR\khrplatform.h" />
     <ClInclude Include="vendor\freetype\config\ftconfig.h" />
     <ClInclude Include="vendor\freetype\config\ftheader.h" />
     <ClInclude Include="vendor\freetype\config\ftmodule.h" />
@@ -256,7 +240,6 @@
     <ClInclude Include="vendor\freetype\tttables.h" />
     <ClInclude Include="vendor\freetype\tttags.h" />
     <ClInclude Include="vendor\ft2build.h" />
-    <ClInclude Include="vendor\glad\glad.h" />
     <ClInclude Include="vendor\glm\common.hpp" />
     <ClInclude Include="vendor\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\detail\_fixes.hpp" />
@@ -683,39 +666,201 @@
     <ClInclude Include="vendor\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\vector_relational.hpp" />
+    <ClInclude Include="vendor\glslang\Include\BaseTypes.h" />
+    <ClInclude Include="vendor\glslang\Include\Common.h" />
+    <ClInclude Include="vendor\glslang\Include\ConstantUnion.h" />
+    <ClInclude Include="vendor\glslang\Include\PoolAlloc.h" />
+    <ClInclude Include="vendor\glslang\Include\ResourceLimits.h" />
+    <ClInclude Include="vendor\glslang\Include\SpirvIntrinsics.h" />
+    <ClInclude Include="vendor\glslang\Include\Types.h" />
+    <ClInclude Include="vendor\glslang\Include\arrays.h" />
+    <ClInclude Include="vendor\glslang\Include\intermediate.h" />
+    <ClInclude Include="vendor\glslang\MachineIndependent\Versions.h" />
+    <ClInclude Include="vendor\glslang\MachineIndependent\localintermediate.h" />
+    <ClInclude Include="vendor\glslang\Public\ShaderLang.h" />
+    <ClInclude Include="vendor\glslang\SPIRV\GlslangToSpv.h" />
+    <ClInclude Include="vendor\glslang\SPIRV\Logger.h" />
+    <ClInclude Include="vendor\glslang\SPIRV\SPVRemapper.h" />
+    <ClInclude Include="vendor\glslang\SPIRV\SpvTools.h" />
+    <ClInclude Include="vendor\glslang\SPIRV\spirv.hpp" />
+    <ClInclude Include="vendor\glslang\SPIRV\spvIR.h" />
+    <ClInclude Include="vendor\shaderc\env.h" />
+    <ClInclude Include="vendor\shaderc\shaderc.h" />
+    <ClInclude Include="vendor\shaderc\shaderc.hpp" />
+    <ClInclude Include="vendor\shaderc\status.h" />
+    <ClInclude Include="vendor\shaderc\visibility.h" />
+    <ClInclude Include="vendor\spirv-headers\GLSL.std.450.h" />
+    <ClInclude Include="vendor\spirv-headers\spirv.h" />
+    <ClInclude Include="vendor\spirv-headers\spirv.hpp" />
+    <ClInclude Include="vendor\spirv-tools\libspirv.h" />
+    <ClInclude Include="vendor\spirv-tools\libspirv.hpp" />
+    <ClInclude Include="vendor\spirv-tools\linker.hpp" />
+    <ClInclude Include="vendor\spirv-tools\optimizer.hpp" />
+    <ClInclude Include="vendor\spirv_cross\GLSL.std.450.h" />
+    <ClInclude Include="vendor\spirv_cross\spirv.h" />
+    <ClInclude Include="vendor\spirv_cross\spirv.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_cfg.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_common.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_cross.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_cross_c.h" />
+    <ClInclude Include="vendor\spirv_cross\spirv_cross_containers.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_cross_error_handling.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_cross_parsed_ir.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_glsl.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_hlsl.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_msl.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_parser.hpp" />
+    <ClInclude Include="vendor\spirv_cross\spirv_reflect.hpp" />
     <ClInclude Include="vendor\stb_image.h" />
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h264std.h" />
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h264std_decode.h" />
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h264std_encode.h" />
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h265std.h" />
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h265std_decode.h" />
+    <ClInclude Include="vendor\vk_video\vulkan_video_codec_h265std_encode.h" />
+    <ClInclude Include="vendor\vk_video\vulkan_video_codecs_common.h" />
+    <ClInclude Include="vendor\vma\src\Common.h" />
+    <ClInclude Include="vendor\vma\src\SparseBindingTest.h" />
+    <ClInclude Include="vendor\vma\src\Tests.h" />
+    <ClInclude Include="vendor\vma\src\VmaUsage.h" />
+    <ClInclude Include="vendor\vma\vk_mem_alloc.h" />
+    <ClInclude Include="vendor\volk\volk.h" />
+    <ClInclude Include="vendor\vulkan\vk_enum_string_helper.h" />
+    <ClInclude Include="vendor\vulkan\vk_icd.h" />
+    <ClInclude Include="vendor\vulkan\vk_layer.h" />
+    <ClInclude Include="vendor\vulkan\vk_platform.h" />
+    <ClInclude Include="vendor\vulkan\vk_sdk_platform.h" />
+    <ClInclude Include="vendor\vulkan\vulkan.h" />
+    <ClInclude Include="vendor\vulkan\vulkan.hpp" />
+    <ClInclude Include="vendor\vulkan\vulkan_android.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_beta.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_core.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_directfb.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_enums.hpp" />
+    <ClInclude Include="vendor\vulkan\vulkan_format_traits.hpp" />
+    <ClInclude Include="vendor\vulkan\vulkan_fuchsia.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_funcs.hpp" />
+    <ClInclude Include="vendor\vulkan\vulkan_ggp.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_handles.hpp" />
+    <ClInclude Include="vendor\vulkan\vulkan_hash.hpp" />
+    <ClInclude Include="vendor\vulkan\vulkan_ios.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_macos.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_metal.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_profiles.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_profiles.hpp" />
+    <ClInclude Include="vendor\vulkan\vulkan_raii.hpp" />
+    <ClInclude Include="vendor\vulkan\vulkan_screen.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_structs.hpp" />
+    <ClInclude Include="vendor\vulkan\vulkan_vi.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_wayland.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_win32.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_xcb.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_xlib.h" />
+    <ClInclude Include="vendor\vulkan\vulkan_xlib_xrandr.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Buffers\Buffer.cpp" />
-    <ClCompile Include="src\Buffers\Framebuffer.cpp" />
-    <ClCompile Include="src\Buffers\IndexBuffer.cpp" />
-    <ClCompile Include="src\Buffers\VertexArray.cpp" />
-    <ClCompile Include="src\Buffers\VertexBuffer.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\Lighting\DirectionalLight.cpp" />
-    <ClCompile Include="src\Lighting\PointLight.cpp" />
-    <ClCompile Include="src\Material.cpp" />
-    <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\Objects\Billboard.cpp" />
-    <ClCompile Include="src\Objects\Font.cpp" />
-    <ClCompile Include="src\Objects\Sprite2D.cpp" />
-    <ClCompile Include="src\Renderer.cpp" />
-    <ClCompile Include="src\Shader.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\Vulkan\GraphicsPipeline.cpp" />
+    <ClCompile Include="src\Vulkan\Renderer.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="vendor\glad\glad.c" />
     <ClCompile Include="vendor\glm\detail\glm.cpp" />
+    <ClCompile Include="vendor\vma\src\Common.cpp" />
+    <ClCompile Include="vendor\vma\src\SparseBindingTest.cpp" />
+    <ClCompile Include="vendor\vma\src\Tests.cpp" />
+    <ClCompile Include="vendor\vma\src\VmaUsage.cpp" />
+    <ClCompile Include="vendor\vma\src\VulkanSample.cpp" />
+    <ClCompile Include="vendor\volk\volk.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".vs\ORE\v17\ipch\AutoPCH\9725e0f2fa789f16\MAIN.ipch" />
+    <None Include="obj\x64\Debug\Window.obj" />
+    <None Include="obj\x64\Debug\main.obj" />
+    <None Include="obj\x64\ExecTest\Window.obj" />
+    <None Include="obj\x64\ExecTest\main.obj" />
+    <None Include="obj\x64\ExecTest\window.obj.enc" />
+    <None Include="vendor\freetype\LICENSE.TXT" />
+    <None Include="vendor\freetype\docs\.gitignore" />
+    <None Include="vendor\freetype\docs\CHANGES" />
+    <None Include="vendor\freetype\docs\CMAKE" />
+    <None Include="vendor\freetype\docs\CUSTOMIZE" />
+    <None Include="vendor\freetype\docs\DEBUG" />
+    <None Include="vendor\freetype\docs\DOCGUIDE" />
+    <None Include="vendor\freetype\docs\FTL.TXT" />
+    <None Include="vendor\freetype\docs\GPLv2.TXT" />
+    <None Include="vendor\freetype\docs\INSTALL" />
+    <None Include="vendor\freetype\docs\INSTALL.ANY" />
+    <None Include="vendor\freetype\docs\INSTALL.CROSS" />
+    <None Include="vendor\freetype\docs\INSTALL.GNU" />
+    <None Include="vendor\freetype\docs\INSTALL.MAC" />
+    <None Include="vendor\freetype\docs\INSTALL.UNIX" />
+    <None Include="vendor\freetype\docs\INSTALL.VMS" />
+    <None Include="vendor\freetype\docs\MAKEPP" />
+    <None Include="vendor\freetype\docs\PROBLEMS" />
+    <None Include="vendor\freetype\docs\README" />
+    <None Include="vendor\freetype\docs\TODO" />
+    <None Include="vendor\freetype\docs\VERSIONS.TXT" />
+    <None Include="vendor\freetype\docs\formats.txt" />
+    <None Include="vendor\freetype\docs\freetype-config.1" />
+    <None Include="vendor\freetype\docs\markdown\images\favico.ico" />
+    <None Include="vendor\freetype\docs\markdown\javascripts\extra.js" />
+    <None Include="vendor\freetype\docs\markdown\stylesheets\extra.css" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.20" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.21" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.210" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.22" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.23" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.24" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.25" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.26" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.27" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.28" />
+    <None Include="vendor\freetype\docs\oldlogs\ChangeLog.29" />
+    <None Include="vendor\freetype\docs\raster.txt" />
+    <None Include="vendor\freetype\docs\release" />
+    <None Include="vendor\libs\Debug\freetyped.lib" />
+    <None Include="vendor\libs\Debug\freetyped.pdb" />
+    <None Include="vendor\libs\Release\freetype.lib" />
+    <None Include="vendor\libs\glfw3.lib" />
+    <None Include="vendor\libs\glfw3_mt.lib" />
+    <None Include="vendor\spirv-headers\spirv.hpp11" />
+    <None Include="vendor\spirv-headers\spirv.json" />
+    <None Include="vendor\spirv-headers\spirv.lua" />
+    <None Include="vendor\spirv-headers\spirv.py" />
+    <None Include="vendor\vma\.git\HEAD" />
+    <None Include="vendor\vma\.git\config" />
+    <None Include="vendor\vma\.git\description" />
+    <None Include="vendor\vma\.git\hooks\applypatch-msg.sample" />
+    <None Include="vendor\vma\.git\hooks\commit-msg.sample" />
+    <None Include="vendor\vma\.git\hooks\fsmonitor-watchman.sample" />
+    <None Include="vendor\vma\.git\hooks\post-update.sample" />
+    <None Include="vendor\vma\.git\hooks\pre-applypatch.sample" />
+    <None Include="vendor\vma\.git\hooks\pre-commit.sample" />
+    <None Include="vendor\vma\.git\hooks\pre-merge-commit.sample" />
+    <None Include="vendor\vma\.git\hooks\pre-push.sample" />
+    <None Include="vendor\vma\.git\hooks\pre-rebase.sample" />
+    <None Include="vendor\vma\.git\hooks\pre-receive.sample" />
+    <None Include="vendor\vma\.git\hooks\prepare-commit-msg.sample" />
+    <None Include="vendor\vma\.git\hooks\push-to-checkout.sample" />
+    <None Include="vendor\vma\.git\hooks\update.sample" />
+    <None Include="vendor\vma\.git\index" />
+    <None Include="vendor\vma\.git\info\exclude" />
+    <None Include="vendor\vma\.git\logs\HEAD" />
+    <None Include="vendor\vma\.git\logs\refs\heads\master" />
+    <None Include="vendor\vma\.git\logs\refs\remotes\origin\HEAD" />
+    <None Include="vendor\vma\.git\objects\pack\pack-8b8cd59a0a3195f40b7285c163d0cc74de108ef4.idx" />
+    <None Include="vendor\vma\.git\objects\pack\pack-8b8cd59a0a3195f40b7285c163d0cc74de108ef4.pack" />
+    <None Include="vendor\vma\.git\packed-refs" />
+    <None Include="vendor\vma\.git\refs\heads\master" />
+    <None Include="vendor\vma\.git\refs\remotes\origin\HEAD" />
+    <None Include="vendor\vma\LICENSE.txt" />
+    <None Include="vendor\volk\LICENSE.md" />
+    <None Include="x64\Debug\Window.obj" />
+    <None Include="x64\Debug\main.obj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OREML\OREML.vcxproj">
       <Project>{C4B6C20D-30CB-EABE-F94C-8E1E6520E7EF}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="include\ORE\Shaders\IrradianceShader.frag" />
-    <None Include="include\ORE\Shaders\TextShader.frag" />
-    <None Include="include\ORE\Shaders\TextShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
