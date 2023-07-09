@@ -78,7 +78,7 @@ project "ORE"
 	filter "options:api=vulkan"
 		files { "ORE/include/ORE/Vulkan/**.**", "ORE/src/Vulkan/**.**", "ORE/**/Window.**", "ORE/include/ORE/orepch.**", "ORE/**/main.**", "ORE/vendor/**.**" }
 		removefiles { "ORE/vendor/glad/**.**", "ORE/vendor/KHR/**.**" }
-		defines {"API_VULKAN"}
+		defines {"API_VULKAN", "VK_USE_PLATFORM_WIN32_KHR", "SHADERS_COMPILED"}
 	filter {}
 	includedirs { "ORE/vendor", "ORE/include/ORE" }
 	libdirs { "ORE/vendor/libs" }
@@ -96,6 +96,10 @@ project "ORE"
 		links { "OREML", "zlibstatic.lib" }
 
 	filter "configurations:Debug or configurations:ExecTest"
+		links
+		{
+			"GFSDK_Aftermath_Lib.x64.lib"
+		}
 		libdirs { "ORE/vendor/libs/Debug" }
 		defines { "DEBUG" }
 		symbols "On"

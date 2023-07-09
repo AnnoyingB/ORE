@@ -75,7 +75,7 @@ namespace ORE {
 			}
 			// Vertex
 			{
-				auto glsl = ReadFile(vert);
+				auto glsl = ReadFile(info.vert);
 
 				glslang::TShader vertex(EShLangVertex);
 				const char* shaderStrings[1] = { glsl.data() };
