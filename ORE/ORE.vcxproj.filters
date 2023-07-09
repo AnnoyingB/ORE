@@ -2068,6 +2068,12 @@
       <Filter>vendor\vulkan</Filter>
     </ClInclude>
     <ClInclude Include="include\ORE\Vulkan\GraphicsPipeline.h" />
+    <ClInclude Include="include\ORE\Includes.h" />
+    <ClInclude Include="vendor\nsight\GFSDK_Aftermath.h" />
+    <ClInclude Include="vendor\nsight\GFSDK_Aftermath_Defines.h" />
+    <ClInclude Include="vendor\nsight\GFSDK_Aftermath_GpuCrashDump.h" />
+    <ClInclude Include="vendor\nsight\GFSDK_Aftermath_GpuCrashDumpDecoding.h" />
+    <ClInclude Include="include\ORE\Vulkan\VKMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Vulkan\Renderer.cpp">
@@ -2101,6 +2107,7 @@
       <Filter>vendor\volk</Filter>
     </ClCompile>
     <ClCompile Include="src\Vulkan\GraphicsPipeline.cpp" />
+    <ClCompile Include="src\Vulkan\VKMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".vs\ORE\v17\ipch\AutoPCH\9725e0f2fa789f16\MAIN.ipch">

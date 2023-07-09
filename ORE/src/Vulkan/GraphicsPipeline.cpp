@@ -3,6 +3,8 @@
 #include <fstream>
 
 #include "Vulkan/Renderer.h"
+#include "Vulkan/VKMesh.h"
+#include "vma/vk_mem_alloc.h"
 
 namespace ORE {
 	std::vector<VkDynamicState> dynamicStates = {
@@ -49,6 +51,9 @@ namespace ORE {
 	}
 
 	GraphicsPipeline::~GraphicsPipeline() {
+		if (!m_VertexBuffers.empty())
+			for(AllocatedBuffer buffer : m_VertexBuffers)
+				vmaDestroyBuffer(*m_Allocator, buffer.buffer, buffer.allocation);
 		if (m_Pipeline) vkDestroyPipeline(*m_Device, m_Pipeline, nullptr);
 		if (m_PipelineLayout) vkDestroyPipelineLayout(*m_Device, m_PipelineLayout, nullptr);
 		if(m_VertexModule) vkDestroyShaderModule(*m_Device, m_VertexModule, nullptr);
@@ -99,7 +104,7 @@ namespace ORE {
 		// Create geometry module
 		if(hasGeometry)
 			CreateShaderModule(geomBuff, &m_GeometryModule);
-
+		m_Allocator = VKRenderer::GetAllocator();
 		{
 			VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
 			vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -146,6 +151,9 @@ namespace ORE {
 
 		// Create pipeline
 		{
+			VkVertexInputBindingDescription bindingDesc = Vertex::GetBindingDescription();
+			std::array<VkVertexInputAttributeDescription, 2> attributeDesc = Vertex::GetAttributeDescriptions();
+
 			VkPipelineDynamicStateCreateInfo dynamicStateInfo{};
 			dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 			dynamicStateInfo.dynamicStateCount = static_cast<uint32_t>(dynamicStates.size());
@@ -153,8 +161,10 @@ namespace ORE {
 
 			VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 			vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-			vertexInputInfo.vertexBindingDescriptionCount = 0;
-			vertexInputInfo.vertexAttributeDescriptionCount = 0;
+			vertexInputInfo.vertexBindingDescriptionCount = 1;
+			vertexInputInfo.pVertexBindingDescriptions = &bindingDesc;
+			vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDesc.size());
+			vertexInputInfo.pVertexAttributeDescriptions = attributeDesc.data();
 
 			VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo{};
 			inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -235,5 +245,43 @@ namespace ORE {
 
 			std::cout << "Created pipeline!\n";
 		}
+	}
+
+	void GraphicsPipeline::Bind(VkCommandBuffer cmdBuffer, uint32_t index) {
+		vkCmdBindPipeline(cmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_Pipeline);
+		//std::vector<VkBuffer> buffers(m_VertexBuffers.size());
+		//for (AllocatedBuffer buffer : m_VertexBuffers)
+		//	buffers.push_back(buffer.buffer);
+		VkBuffer buffers[] = { m_VertexBuffers[index].buffer };
+		VkDeviceSize offsets[] = { 0 };
+		vkCmdBindVertexBuffers(cmdBuffer, 0, 1, buffers, offsets);
+	}
+
+	VKMesh* GraphicsPipeline::CreateMesh(std::vector<Vertex> vertices) {
+		uint32_t index = m_VertexBuffers.size();
+		m_VertexBuffers.push_back(AllocatedBuffer());
+
+		VkBufferCreateInfo bufferInfo{};
+		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		bufferInfo.size = vertices.size() * sizeof(Vertex);
+		bufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+		bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+		VmaAllocationCreateInfo allocInfo{};
+		allocInfo.usage = VMA_MEMORY_USAGE_CPU_TO_GPU;
+		vmaCreateBuffer(*m_Allocator, &bufferInfo, &allocInfo, &m_VertexBuffers[index].buffer, &m_VertexBuffers[index].allocation, nullptr);
+		void* data = nullptr;
+		vmaMapMemory(*m_Allocator, m_VertexBuffers[index].allocation, &data);
+		memcpy(data, vertices.data(), (size_t)bufferInfo.size);
+		vmaUnmapMemory(*m_Allocator, m_VertexBuffers[index].allocation);
+		m_VerticesSize = vertices.size();
+
+		VKMesh* mesh = new VKMesh();
+		mesh->Create({this, vertices.size(), index});
+		return mesh;
+	}
+
+	uint32_t GraphicsPipeline::GetVerticesSize() {
+		return m_VerticesSize;
 	}
 }

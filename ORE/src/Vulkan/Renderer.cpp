@@ -3,10 +3,20 @@
 #include <algorithm>
 #include <limits>
 #include <set>
+#include <fstream>
+
+#ifndef NO_NSIGHT
+#include "nsight/GFSDK_Aftermath_GpuCrashDump.h"
+#define ENABLE_DUMP GFSDK_Aftermath_EnableGpuCrashDumps(GFSDK_Aftermath_Version_API, GFSDK_Aftermath_GpuCrashDumpWatchedApiFlags_Vulkan, GFSDK_Aftermath_GpuCrashDumpWatchedApiFlags_None, CrashDumpGPU, CrashDumpShader, CrashDumpDescription, CrashDumpResolve, nullptr);
+#define DISABLE_DUMP GFSDK_Aftermath_DisableGpuCrashDumps()
+#else
+#define ENABLE_DUMP
+#define DISABLE_DUMP
+#endif
 
 namespace ORE {
 	inline GLFWwindow* VKRenderer::m_Window = nullptr;
-
+	
 	inline VkInstance VKRenderer::m_Instance = {};
 	inline VkPhysicalDevice VKRenderer::m_PhysicalDevice = {};
 	inline VkDevice VKRenderer::m_Device = {};
@@ -31,6 +41,8 @@ namespace ORE {
 
 	inline std::vector<GraphicsPipeline*> VKRenderer::m_Pipelines = {};
 	inline uint32_t VKRenderer::m_CurrentFrame = {};
+	inline bool VKRenderer::m_ResizedThisFrame = false;
+	inline VmaAllocator VKRenderer::m_Allocator = nullptr;
 
 	const std::vector<const char*> validationLayers = {
 		"VK_LAYER_KHRONOS_validation"
@@ -228,6 +240,7 @@ namespace ORE {
 			swapchainInfo.presentMode = presentMode;
 			swapchainInfo.imageArrayLayers = 1;
 			swapchainInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+			swapchainInfo.oldSwapchain = m_Swapchain;
 
 			m_SwapchainFormat = format.format;
 			m_SwapchainExtent = extent;
@@ -284,8 +297,69 @@ namespace ORE {
 
 			std::cout << "Created image views\n";
 		}
+		
+		// Create swapchain framebuffers
+		{
+			VkFramebufferCreateInfo framebufferInfo{};
+			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			framebufferInfo.renderPass = m_RenderPass;
+			framebufferInfo.width = m_SwapchainExtent.width;
+			framebufferInfo.height = m_SwapchainExtent.height;
+			framebufferInfo.layers = 1;
+
+			m_SwapchainFramebuffers.resize(m_SwapchainImageViews.size());
+			for (int i = 0; i < m_SwapchainFramebuffers.size(); i++) {
+				VkImageView attachments[] = {
+					m_SwapchainImageViews[i]
+				};
+
+				framebufferInfo.attachmentCount = static_cast<uint32_t>(sizeof(attachments) / sizeof(attachments[0]));
+				framebufferInfo.pAttachments = attachments;
+
+				VK_CHECK(vkCreateFramebuffer(m_Device, &framebufferInfo, nullptr, &m_SwapchainFramebuffers[i]));
+			}
+		}
 	}
 
+	void CrashDumpGPU(const void* gpuCrashDump, uint32_t dumpSize, void* userData) {
+		std::cout << "gpu\n";
+		std::ofstream file("DumpGPU.gpudbg", std::ios::binary);
+		if (!file.is_open()) {
+			abort();
+			return;
+		}
+		file.write(reinterpret_cast<const char*>(gpuCrashDump), dumpSize);
+		file.close();
+	}
+
+	void CrashDumpShader(const void* gpuCrashDump, uint32_t dumpSize, void* userData) {
+		std::cout << "shader\n";
+		std::ofstream file("DumpShader.nvdbg", std::ios::binary);
+		if (!file.is_open()) {
+			abort();
+			return;
+		}
+		file.write(reinterpret_cast<const char*>(gpuCrashDump), dumpSize);
+		file.close();
+	}
+
+
+	void CrashDumpDescription(PFN_GFSDK_Aftermath_AddGpuCrashDumpDescription randomPtr, void* userData) {
+		std::cout << "idk\n";
+	}
+
+
+	void CrashDumpResolve(const void* marker, void* userData, void** resolvedMarker, uint32_t* markerSize) {
+		std::cout << "marker\n";
+		std::ofstream file("DumpMarker.nvdbg", std::ios::binary);
+		if (!file.is_open()) {
+			abort();
+			return;
+		}
+		file.write(reinterpret_cast<const char*>(marker), *markerSize);
+		file.close();
+	}
+	
 	void VKRenderer::Initialize(GLFWwindow* window, const std::string& name, bool validation) {
 		{
 			// Initialize volk
@@ -322,6 +396,7 @@ namespace ORE {
 			// load swapchain function
 			//vkCreateWin32SurfaceKHR = (PFN_vkCreateWin32SurfaceKHR)vkGetInstanceProcAddr(m_Instance, "vkCreateWin32SurfaceKHR");
 		}
+		ENABLE_DUMP
 
 		m_Window = window;
 
@@ -587,12 +662,43 @@ namespace ORE {
 				VK_CHECK(vkCreateFence(m_Device, &fenceInfo, nullptr, &m_InFlights[i]));
 			}
 		}
+
+		// Create allocator
+		{
+			VmaVulkanFunctions vma_vulkan_func{};
+			vma_vulkan_func.vkAllocateMemory = vkAllocateMemory;
+			vma_vulkan_func.vkBindBufferMemory = vkBindBufferMemory;
+			vma_vulkan_func.vkBindImageMemory = vkBindImageMemory;
+			vma_vulkan_func.vkCreateBuffer = vkCreateBuffer;
+			vma_vulkan_func.vkCreateImage = vkCreateImage;
+			vma_vulkan_func.vkDestroyBuffer = vkDestroyBuffer;
+			vma_vulkan_func.vkDestroyImage = vkDestroyImage;
+			vma_vulkan_func.vkFlushMappedMemoryRanges = vkFlushMappedMemoryRanges;
+			vma_vulkan_func.vkFreeMemory = vkFreeMemory;
+			vma_vulkan_func.vkGetBufferMemoryRequirements = vkGetBufferMemoryRequirements;
+			vma_vulkan_func.vkGetImageMemoryRequirements = vkGetImageMemoryRequirements;
+			vma_vulkan_func.vkGetPhysicalDeviceMemoryProperties = vkGetPhysicalDeviceMemoryProperties;
+			vma_vulkan_func.vkGetPhysicalDeviceProperties = vkGetPhysicalDeviceProperties;
+			vma_vulkan_func.vkInvalidateMappedMemoryRanges = vkInvalidateMappedMemoryRanges;
+			vma_vulkan_func.vkMapMemory = vkMapMemory;
+			vma_vulkan_func.vkUnmapMemory = vkUnmapMemory;
+			vma_vulkan_func.vkCmdCopyBuffer = vkCmdCopyBuffer;
+			vma_vulkan_func.vkGetBufferMemoryRequirements2KHR = vkGetBufferMemoryRequirements2;
+
+			VmaAllocatorCreateInfo allocatorInfo{};
+			allocatorInfo.instance = m_Instance;
+			allocatorInfo.device = m_Device;
+			allocatorInfo.physicalDevice = m_PhysicalDevice;
+			allocatorInfo.vulkanApiVersion = VK_API_VERSION_1_3;
+			allocatorInfo.pVulkanFunctions = &vma_vulkan_func;
+
+			vmaCreateAllocator(&allocatorInfo, &m_Allocator);
+		}
 	}
 
 	void VKRenderer::Cleanup() {
 		vkDeviceWaitIdle(m_Device);
 
-		// Got a critical error here? Oh well
 		for (int i = 0; i < FRAMES_IN_FLIGHT; i++) {
 			vkDestroySemaphore(m_Device, m_ImagesAvailable[i], nullptr);
 			vkDestroySemaphore(m_Device, m_FramesFinished[i], nullptr);
@@ -603,7 +709,7 @@ namespace ORE {
 		for (GraphicsPipeline* pipeline : m_Pipelines)
 			delete pipeline;
 		std::cout << "Destroyed pipelines\n";
-		
+		vmaDestroyAllocator(m_Allocator);
 		vkDestroyCommandPool(m_Device, m_CommandPool, nullptr);
 		std::cout << "Destroyed command pool\n";
 		vkDestroyRenderPass(m_Device, m_RenderPass, nullptr);
@@ -623,6 +729,7 @@ namespace ORE {
 		std::cout << "Destroyed device\n";
 		vkDestroyInstance(m_Instance, nullptr);
 		std::cout << "Destroyed instance\n";
+		DISABLE_DUMP;
 	}
 
 	void VKRenderer::Record(VkClearValue clearValue) {
@@ -631,6 +738,7 @@ namespace ORE {
 		if (vkAcquireNextImageKHR(m_Device, m_Swapchain, UINT64_MAX, m_ImagesAvailable[m_CurrentFrame], VK_NULL_HANDLE, &imageIndex) == VK_ERROR_OUT_OF_DATE_KHR) {
 			// Recreate swapchain, resized window
 			RecreateSwapchain();
+			m_ResizedThisFrame = true;
 			return;
 		}
 
@@ -655,27 +763,15 @@ namespace ORE {
 		vkCmdBeginRenderPass(m_CommandBuffers[m_CurrentFrame], &renderpassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 	}
 
-	void VKRenderer::Draw(Pipeline pipeline) {
-		vkCmdBindPipeline(m_CommandBuffers[m_CurrentFrame], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
-
-		VkViewport viewport{};
-		viewport.x = 0;
-		viewport.y = 0;
-		viewport.width = static_cast<float>(m_SwapchainExtent.width);
-		viewport.height = static_cast<float>(m_SwapchainExtent.height);
-		viewport.minDepth = 0.0f;
-		viewport.maxDepth = 1.0f;
-		vkCmdSetViewport(m_CommandBuffers[m_CurrentFrame], 0, 1, &viewport);
-
-		VkRect2D scissor{};
-		scissor.offset = { 0, 0 };
-		scissor.extent = m_SwapchainExtent;
-		vkCmdSetScissor(m_CommandBuffers[m_CurrentFrame], 0, 1, &scissor);
-
-		vkCmdDraw(m_CommandBuffers[m_CurrentFrame], 3, 1, 0, 0);
+	void VKRenderer::DrawMesh(VKMesh& mesh) {
+		mesh.Render(m_CommandBuffers[m_CurrentFrame]);
 	}
 
 	void VKRenderer::Present() {
+		if (m_ResizedThisFrame) {
+			m_ResizedThisFrame = false;
+			return;
+		}
 		vkCmdEndRenderPass(m_CommandBuffers[m_CurrentFrame]);
 		VK_CHECK(vkEndCommandBuffer(m_CommandBuffers[m_CurrentFrame]));
 
@@ -721,4 +817,6 @@ namespace ORE {
 	VkDevice* VKRenderer::GetLogicalDevice() { return &m_Device; }
 	VkExtent2D* VKRenderer::GetExtent() { return &m_SwapchainExtent; }
 	VkRenderPass* VKRenderer::GetRenderPass() { return &m_RenderPass; }
+	VmaAllocator* VKRenderer::GetAllocator() { return &m_Allocator; }
+	VKRenderer::QueueFamilyIndices* VKRenderer::GetQueueFamilyIndices() { return &m_Indices; }
 }

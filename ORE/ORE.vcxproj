@@ -129,13 +129,15 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glslang.lib;freetyped.lib;glfw3.lib;glfw3_mt.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GFSDK_Aftermath_Lib.x64.lib;glslang.lib;freetyped.lib;glfw3.lib;glfw3_mt.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>vendor\libs;..\OREML\vendor;..\OREML\vendor\bin;vendor\libs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\ORE\Includes.h" />
     <ClInclude Include="include\ORE\Vulkan\GraphicsPipeline.h" />
     <ClInclude Include="include\ORE\Vulkan\Renderer.h" />
+    <ClInclude Include="include\ORE\Vulkan\VKMesh.h" />
     <ClInclude Include="include\ORE\Window.h" />
     <ClInclude Include="include\ORE\orepch.h" />
     <ClInclude Include="vendor\GLFW\glfw3.h" />
@@ -684,6 +686,10 @@
     <ClInclude Include="vendor\glslang\SPIRV\SpvTools.h" />
     <ClInclude Include="vendor\glslang\SPIRV\spirv.hpp" />
     <ClInclude Include="vendor\glslang\SPIRV\spvIR.h" />
+    <ClInclude Include="vendor\nsight\GFSDK_Aftermath.h" />
+    <ClInclude Include="vendor\nsight\GFSDK_Aftermath_Defines.h" />
+    <ClInclude Include="vendor\nsight\GFSDK_Aftermath_GpuCrashDump.h" />
+    <ClInclude Include="vendor\nsight\GFSDK_Aftermath_GpuCrashDumpDecoding.h" />
     <ClInclude Include="vendor\shaderc\env.h" />
     <ClInclude Include="vendor\shaderc\shaderc.h" />
     <ClInclude Include="vendor\shaderc\shaderc.hpp" />
@@ -761,6 +767,7 @@
   <ItemGroup>
     <ClCompile Include="src\Vulkan\GraphicsPipeline.cpp" />
     <ClCompile Include="src\Vulkan\Renderer.cpp" />
+    <ClCompile Include="src\Vulkan\VKMesh.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="vendor\glm\detail\glm.cpp" />

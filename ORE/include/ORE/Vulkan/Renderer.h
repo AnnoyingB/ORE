@@ -1,6 +1,7 @@
 #pragma once
 //#define VK_USE_PLATFORM_WIN32_KHR
 #include "volk/volk.h"
+#include "vma/vk_mem_alloc.h"
 #include <optional>
 #include <string>
 
@@ -9,7 +10,7 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
 
-#include "Vulkan/GraphicsPipeline.h"
+#include "Vulkan/VKMesh.h"
 
 #define VK_CHECK(x)                               \
 if(x != VK_SUCCESS) {                             \
@@ -70,6 +71,8 @@ namespace ORE {
 
 		static std::vector<GraphicsPipeline*> m_Pipelines;
 		static uint32_t m_CurrentFrame;
+		static bool m_ResizedThisFrame;
+		static VmaAllocator m_Allocator;
 
 		static bool CheckDeviceExtensions(const VkPhysicalDevice&);
 		static QueueFamilyIndices FindQueueFamilies(const VkPhysicalDevice&);
@@ -86,7 +89,7 @@ namespace ORE {
 		static void Cleanup();
 
 		static void Record(VkClearValue clear = { {{1.f, 0.f, 1.f, 1.f}} });
-		static void Draw(Pipeline);
+		static void DrawMesh(VKMesh&);
 		static void Present();
 
 		// Store the return value as Pipeline
@@ -95,5 +98,7 @@ namespace ORE {
 		static VkDevice* GetLogicalDevice();
 		static VkExtent2D* GetExtent();
 		static VkRenderPass* GetRenderPass();
+		static VmaAllocator* GetAllocator();
+		static QueueFamilyIndices* GetQueueFamilyIndices();
 	};
 }

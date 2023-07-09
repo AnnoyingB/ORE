@@ -73,7 +73,8 @@ project "ORE"
 
 	filter "options:api=opengl"
 		files { "ORE/**.h", "ORE/**.c", "ORE/**.cpp", "ORE/**.inl", "ORE/**.hpp" }
-		removefiles { "ORE/**/Vulkan/**.**" }
+		removefiles { "ORE/**/Vulkan/**.**", "ORE/vendor/vma/**.**", "ORE/vendor/vk_video/**.**", "ORE/vendor/spriv-tools/**.**", "ORE/vendor/spriv-headers/**.**", "ORE/vendor/spirv_cross/**.**", "ORE/vendor/spriv/**.**", "ORE/vendor/nsight/**.**", "ORE/vendor/vma/**.**"}
+		defines {"API_OPENGL"}
 	filter "options:api=vulkan"
 		files { "ORE/include/ORE/Vulkan/**.**", "ORE/src/Vulkan/**.**", "ORE/**/Window.**", "ORE/include/ORE/orepch.**", "ORE/**/main.**", "ORE/vendor/**.**" }
 		removefiles { "ORE/vendor/glad/**.**", "ORE/vendor/KHR/**.**" }
@@ -101,5 +102,5 @@ project "ORE"
 
     filter "configurations:Release"
 		libdirs { "ORE/vendor/libs/Release" }
-		defines { "NDEBUG" }
+		defines { "NDEBUG", "NO_NSIGHT" }
 		optimize "On"

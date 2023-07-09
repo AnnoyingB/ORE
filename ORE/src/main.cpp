@@ -1,28 +1,28 @@
 //#define ORE
-#define STB_IMAGE_IMPLEMENTATION
 #include "orepch.h"
-#include "Window.h"
-#include "Vulkan/Renderer.h"
-//#include "OREML/Loader.h"
-//#include "Objects/Billboard.h"
-//#include "Objects/Font.h"
+#include "Includes.h"
 
 using namespace ORE;
 
 int main() {
+#ifdef API_VULKAN
 	Window window;
 	window.Create("ORE", { 1280, 720 });
 	VKRenderer::Initialize(window);
-
-	Pipeline pipeline = *VKRenderer::CreatePipeline({ "include\\ORE\\Assets\\Shaders\\Vulkan\\SimpleShaderV.spv", "include\\ORE\\Assets\\Shaders\\Vulkan\\SimpleShaderF.spv" });;
+	Pipeline pipeline = *VKRenderer::CreatePipeline({ "include\\ORE\\Assets\\Shaders\\Vulkan\\SimpleShaderV.spv", "include\\ORE\\Assets\\Shaders\\Vulkan\\SimpleShaderF.spv" });
+	VKMesh mesh = *pipeline.CreateMesh(VKMesh::Triangle);
 
 	while (!window.ShouldClose()) {
 		window.Poll();
 		VKRenderer::Record();
-		VKRenderer::Draw(pipeline);
+		VKRenderer::DrawMesh(mesh);
 		VKRenderer::Present();
 	}
-	/*window.InitGlad();
+	VKRenderer::Cleanup();
+#else
+	Window window;
+	window.Create("ORE", { 1280, 720 });
+	window.InitGlad();
 
 	//MeshCreateInfo MCI{};
 	//MCI.vertices = std::vector<ORE::Vertex>();
@@ -30,7 +30,7 @@ int main() {
 	//MCI.vertices.push_back({ { 0.5f, -0.5f, 0.0f }, { 0.f, 1.f, 0.f, 1.f }, { 1.f, -1.f, 0.f } });
 	//MCI.vertices.push_back({ { 0.0f, 0.5f, 0.0f }, { 0.f, 0.f, 1.f, 1.f }, { 0.f, 1.f, 0.f } });
 	//MCI.indices = { 0, 1, 2 };
-	MeshCreateInfo MCI{};
+	/*MeshCreateInfo MCI{};
 	MCI = OREML::Loader::Load("include\\ORE\\Assets\\Models\\SkyBox.fbx")[0];
 	MCI.shaderPath = ORE::Shader::PBRShader;
 
@@ -81,9 +81,9 @@ int main() {
 		//pointLight->RenderBillboard();
 
 		window.Poll();
-	}
+	}*/
 
-	ORE::Renderer::Cleanup();*/
-	VKRenderer::Cleanup();
+	ORE::Renderer::Cleanup();
+#endif
 	return 0;
 }

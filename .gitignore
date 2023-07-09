@@ -400,3 +400,7 @@ FodyWeavers.xsd
 # Other
 obj
 x64
+*.spv
+*.vcxproj
+*.vcxproj.filters
+*.bak
